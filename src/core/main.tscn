@@ -1,0 +1,195 @@
+[gd_scene load_steps=12 format=3 uid="uid://dg5wpah0fqkwk"]
+
+[ext_resource type="Script" uid="uid://r57o255hxj8o" path="res://addons/MultiplayCore/MultiPlay.gd" id="1_csopv"]
+[ext_resource type="PackedScene" uid="uid://bkjs7hge7372k" path="res://src/player/player.tscn" id="2_xa854"]
+[ext_resource type="PackedScene" uid="uid://b6jwhms6saxq1" path="res://src/worlds/world1.tscn" id="3_kagtj"]
+[ext_resource type="Script" uid="uid://c26bx74uj1ae6" path="res://addons/MultiplayCore/net_protocols/ENetProtocol.gd" id="4_cus2n"]
+[ext_resource type="Texture2D" uid="uid://dnkhq55h26c0r" path="res://assets/spinner.png" id="5_xa854"]
+[ext_resource type="Script" uid="uid://d3s4vy20qqra0" path="res://src/core/ServerGUI.gd" id="6_kagtj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kagtj"]
+bg_color = Color(0, 0, 0, 0.247059)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cus2n"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0, 0, 0, 0.333333)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="Animation" id="Animation_cdskr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_osufp"]
+resource_name = "spin"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bhxad"]
+_data = {
+&"RESET": SubResource("Animation_cdskr"),
+&"spin": SubResource("Animation_osufp")
+}
+
+[node name="Main" type="Node2D"]
+
+[node name="MultiPlayCore" type="Node" parent="."]
+script = ExtResource("1_csopv")
+max_players = 6
+player_scene = ExtResource("2_xa854")
+first_scene = ExtResource("3_kagtj")
+metadata/_custom_type_script = "uid://r57o255hxj8o"
+
+[node name="ENetProtocol" type="Node" parent="MultiPlayCore"]
+script = ExtResource("4_cus2n")
+metadata/_custom_type_script = "uid://c26bx74uj1ae6"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Control" type="Panel" parent="CanvasLayer" node_paths=PackedStringArray("mpc", "host_btn", "join_btn", "address_bar", "player_name_line", "button_layout", "connecting_layout", "connect_fail_layout", "connect_fail_label")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kagtj")
+script = ExtResource("6_kagtj")
+mpc = NodePath("../../MultiPlayCore")
+host_btn = NodePath("Layout/Buttons/Host")
+join_btn = NodePath("Layout/Buttons/HBoxContainer/Join")
+address_bar = NodePath("Layout/Buttons/HBoxContainer/Address")
+player_name_line = NodePath("Layout/Buttons/player_name_line")
+button_layout = NodePath("Layout/Buttons")
+connecting_layout = NodePath("Layout/Connecting")
+connect_fail_layout = NodePath("Layout/ConnectionFailure")
+connect_fail_label = NodePath("Layout/ConnectionFailure/Layout/Reason")
+
+[node name="Layout" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="GameTitle" type="Label" parent="CanvasLayer/Control/Layout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "My Epic Game"
+
+[node name="ConnectionFailure" type="PanelContainer" parent="CanvasLayer/Control/Layout"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cus2n")
+
+[node name="Layout" type="VBoxContainer" parent="CanvasLayer/Control/Layout/ConnectionFailure"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CanvasLayer/Control/Layout/ConnectionFailure/Layout"]
+layout_mode = 2
+text = "Connection Failed"
+
+[node name="Reason" type="Label" parent="CanvasLayer/Control/Layout/ConnectionFailure/Layout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Reason: ERR"
+
+[node name="Buttons" type="VBoxContainer" parent="CanvasLayer/Control/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Host" type="Button" parent="CanvasLayer/Control/Layout/Buttons"]
+layout_mode = 2
+text = "Host"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/Layout/Buttons"]
+layout_mode = 2
+
+[node name="Address" type="LineEdit" parent="CanvasLayer/Control/Layout/Buttons/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "127.0.0.1:4200"
+placeholder_text = "Address"
+
+[node name="Join" type="Button" parent="CanvasLayer/Control/Layout/Buttons/HBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "Join"
+
+[node name="player_name_line" type="LineEdit" parent="CanvasLayer/Control/Layout/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Name"
+
+[node name="Connecting" type="VBoxContainer" parent="CanvasLayer/Control/Layout"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Spinner" type="Control" parent="CanvasLayer/Control/Layout/Connecting"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Layout/Connecting/Spinner"]
+modulate = Color(1, 1, 1, 0.678431)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(15, 15)
+texture = ExtResource("5_xa854")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Layout/Connecting/Spinner"]
+libraries = {
+&"": SubResource("AnimationLibrary_bhxad")
+}
+autoplay = "spin"
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Layout/Connecting"]
+modulate = Color(1, 1, 1, 0.498039)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Connecting..."
+horizontal_alignment = 1

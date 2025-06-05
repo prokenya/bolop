@@ -1,0 +1,6 @@
+res://src/player/player.tscn
+res://src/player/components/states/stuck_state.gd
+res://src/worlds/world1.tscn
+res://src/core/main.tscn
+res://src/worlds/platforms/platform.gd
+res://src/player/components/platform_connect_component.gd

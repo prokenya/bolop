@@ -1,0 +1,12 @@
+res://addons/MultiplayCore/debug_ui/debug_ui.tscn::595aecd3058c6623c626652f901d53e6::1747899131::res://.godot/exported/133200997/export-ce2eed902771f312a28620907010ae8d-debug_ui.scn
+res://addons/MultiplayCore/editor/scenes/player_debug_config.tscn::30d19a920e974f04700b4b3ed64d97f4::1747899131::res://.godot/exported/133200997/export-024fcb7a1abce2a552cebb1bdc43d036-player_debug_config.scn
+res://addons/MultiplayCore/editor/window/debug_configs.tscn::8f60fda48f3491b0c754890eee453fc3::1747899131::res://.godot/exported/133200997/export-c2da77c1a4af81088cded74c0e481544-debug_configs.scn
+res://addons/MultiplayCore/editor/window/first_restart.tscn::1bff838fda139b840b98db357cebc9d5::1747899131::res://.godot/exported/133200997/export-2eafcc5d81892d4419f77d4b779d65ee-first_restart.scn
+res://addons/MultiplayCore/editor/window/update_popup.tscn::ebd913a8c468e2ffa213d4ef5840d7aa::1747899131::res://.godot/exported/133200997/export-a38b1f389b6fb6c4d9954c9a35faafb5-update_popup.scn
+res://addons/MultiplayCore/editor/window/welcome_popup.tscn::1df4811767e897e6963624e22c69d29b::1747899131::res://.godot/exported/133200997/export-b570c921671ed7a30f05c40c7aea7e5b-welcome_popup.scn
+res://addons/MultiplayCore/scenes/multiplay_player.tscn::215801a18287ef3f9a0085f73587f928::1747899132::res://.godot/exported/133200997/export-77c6b4097e9e08aeb152443b0ce7a140-multiplay_player.scn
+res://core/main.tscn::6f86ca454804ada9441d6198b6d9234d::1747930828::res://.godot/exported/133200997/export-b4dd13ef295cb0bc685fb742237bb75a-main.scn
+res://core/theme.tres::34c4b21582d53cb0d18964532530adf0::1747902522::res://.godot/exported/133200997/export-dfeedc6a9e17c8621c3c7b6f5905bf92-theme.res
+res://player/player.tscn::296abfef37f067e1dd514df82ab9fcc3::1747930843::res://.godot/exported/133200997/export-753d15e03e0182f9d550ac833b42bb41-player.scn
+res://worlds/world1.tscn::485853dde81e9dae5fb8649a9c734215::1747930828::res://.godot/exported/133200997/export-b83fa07a2c0974f1e62642e375784608-world1.scn
+res://test.tscn::54f7681a59def73e04accdeafc062564::1747925657::res://.godot/exported/133200997/export-f0a4ea32b72b64218d23e48a955cbc61-test.scn
