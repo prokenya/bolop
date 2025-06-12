@@ -34,28 +34,17 @@ func handle_movement(delta: float, direction: Vector2) -> void:
 	
 	var vel_normal: float = dist_error * 15
 	var vel_tangent: float
-	var player_direction = Vector2(cos(character.rotation),sin(character.rotation)).normalized()
-	var angle = player_direction.angle()
-	var side_angle = PI/2 - abs(fmod(abs(angle) - PI/2,PI/2))
-	#print(rad_to_deg(angle))
-	#print("sl >>> " + str(rad_to_deg(side_angle)))
-	var Xdead_zone = abs(abs(angle) - PI/2) < deg_to_rad(5)
-	var Ydead_zone = abs(side_angle) < deg_to_rad(5) and abs(side_angle) > deg_to_rad(1) 
-	print(Ydead_zone)
-	if direction.x != 0:
-		if abs(side_angle) < deg_to_rad(85) or direction.x != last_direction.x and Xdead_zone:
-			if abs(angle) > deg_to_rad(90):
-				vel_tangent = direction.x * speed *-1
-			else:
-				vel_tangent = direction.x * speed
-			if !Xdead_zone:
-				last_direction.x = direction.x
 	
-	if direction.y != 0:
-		if abs(side_angle) > deg_to_rad(5) or direction.y != last_direction.y and Ydead_zone:
-			vel_tangent = direction.y * speed * sign(angle)
-			if !Ydead_zone:
-				last_direction.y = direction.y
+#region direction
+	var tangent_input = direction.dot(tangent)
+	
+	if abs(tangent_input) > 0.1 or last_direction != direction:
+		vel_tangent = sign(tangent_input) * speed
+		last_direction = direction
+	else:
+		vel_tangent = 0
+
+#endregion
 				
 	character.velocity = tangent * vel_tangent + wall_normal * -vel_normal
 	

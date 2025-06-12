@@ -16,7 +16,7 @@ class_name MovementState
 func _physics_process(delta):
 	if mpp and !mpp.is_ready:
 		return
-	var direction = Input.get_vector(mpp.ma("ui_left"), mpp.ma("ui_right"),mpp.ma("ui_up"),mpp.ma("ui_down"))
+	var direction = Input.get_vector(mpp.ma("ui_left"), mpp.ma("ui_right"),mpp.ma("ui_up"),mpp.ma("ui_down")).normalized()
 	handle_movement(delta,direction)
 	character.move_and_slide()
  
