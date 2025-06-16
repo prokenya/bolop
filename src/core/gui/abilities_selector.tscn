@@ -1,0 +1,82 @@
+[gd_scene load_steps=14 format=3 uid="uid://dy7n3sq22m4wx"]
+
+[ext_resource type="Script" uid="uid://cfipxwbylolly" path="res://src/core/gui/abilities_selector.gd" id="1_lg13k"]
+
+[sub_resource type="Gradient" id="Gradient_0w40q"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2dgbg"]
+gradient = SubResource("Gradient_0w40q")
+
+[sub_resource type="Gradient" id="Gradient_k456d"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mfs87"]
+gradient = SubResource("Gradient_k456d")
+fill_from = Vector2(0.850427, 0.162393)
+
+[sub_resource type="Gradient" id="Gradient_k6k2p"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4ies7"]
+gradient = SubResource("Gradient_k6k2p")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0.730769, 0.350427)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_f7rhu"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_v8sxs"]
+width = 64
+height = 64
+invert = true
+noise = SubResource("FastNoiseLite_f7rhu")
+
+[sub_resource type="Gradient" id="Gradient_lg13k"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0w40q"]
+gradient = SubResource("Gradient_lg13k")
+width = 16
+height = 16
+
+[sub_resource type="Gradient" id="Gradient_euhwp"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lg13k"]
+gradient = SubResource("Gradient_euhwp")
+
+[node name="abilities_selector" type="PanelContainer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -84.0
+offset_right = 200.0
+grow_vertical = 0
+script = ExtResource("1_lg13k")
+abilities_textures = Array[Texture]([SubResource("GradientTexture2D_2dgbg"), SubResource("GradientTexture2D_mfs87"), SubResource("GradientTexture2D_4ies7"), SubResource("NoiseTexture2D_v8sxs")])
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+alignment = 2
+
+[node name="selector" type="TextureRect" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_0w40q")
+
+[node name="abilities_set" type="HBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/abilities_set"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_lg13k")
+
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer/abilities_set"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_lg13k")
+
+[node name="TextureRect3" type="TextureRect" parent="VBoxContainer/abilities_set"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_lg13k")

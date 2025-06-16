@@ -1,12 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://bkjs7hge7372k"]
+[gd_scene load_steps=17 format=3 uid="uid://bkjs7hge7372k"]
 
 [ext_resource type="Script" uid="uid://cepd6vn07wyx5" path="res://src/player/player.gd" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://dwqv65m8ieqgg" path="res://addons/finite_state_machine/scripts/state_machine.gd" id="2_jiejy"]
-[ext_resource type="Texture2D" uid="uid://cvty80gflg4u5" path="res://icon.svg" id="2_rkbax"]
+[ext_resource type="Texture2D" uid="uid://2q1ud1e1vll" path="res://icon.svg" id="2_rkbax"]
 [ext_resource type="Script" uid="uid://cf0ws2lij73so" path="res://addons/MultiplayCore/synchronizers/MPTransformSync.gd" id="3_g1dw6"]
 [ext_resource type="Script" uid="uid://dnsh2hhlovbxw" path="res://src/player/components/states/movement_state.gd" id="3_jiejy"]
 [ext_resource type="Script" uid="uid://da7bm1n6ciq12" path="res://src/player/components/states/stuck_state.gd" id="4_o822w"]
 [ext_resource type="Script" uid="uid://bmnoykt41qebx" path="res://src/player/components/platform_connect_component.gd" id="4_yw30f"]
+[ext_resource type="Theme" uid="uid://d0h2lmuclks7q" path="res://src/core/theme.tres" id="7_8ydov"]
+[ext_resource type="Shader" uid="uid://ctbold875u364" path="res://src/shaders/item_color.gdshader" id="8_l271a"]
+[ext_resource type="Texture2D" uid="uid://weg15dm68o5n" path="res://assets/svg/weapons/boomerang.svg" id="8_x42xx"]
 
 [sub_resource type="Gradient" id="Gradient_g1dw6"]
 colors = PackedColorArray(0, 0, 0, 1, 1, 0, 1, 1)
@@ -17,17 +20,22 @@ gradient = SubResource("Gradient_g1dw6")
 [sub_resource type="CircleShape2D" id="CircleShape2D_yw30f"]
 radius = 55.0
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_g1dw6"]
-properties/0/path = NodePath(".:rotation")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_g1dw6"]
 radius = 58.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ydov"]
+shader = ExtResource("8_l271a")
+shader_parameter/target_collor = Color(0.2, 0.2, 0.2, 1)
+shader_parameter/set_collor = Color(1, 0.31307, 0.731336, 1)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8ydov"]
+properties/0/path = NodePath(".:abilities_set")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
 [node name="player" type="CharacterBody2D"]
 scale = Vector2(0.3, 0.3)
-collision_layer = 0
+collision_layer = 2
 motion_mode = 1
 wall_min_slide_angle = 0.0
 floor_max_angle = 3.14159
@@ -51,6 +59,12 @@ movement_state = NodePath("../MovementState")
 speed = 600.0
 metadata/_custom_type_script = "uid://da7bm1n6ciq12"
 
+[node name="MPTransformSync" type="Node" parent="."]
+script = ExtResource("3_g1dw6")
+lerp_speed = 50
+sync_scale = true
+metadata/_custom_type_script = "uid://cf0ws2lij73so"
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_rkbax")
 
@@ -68,10 +82,15 @@ theme_override_font_sizes/font_size = 50
 text = "name"
 horizontal_alignment = 1
 
-[node name="MPTransformSync" type="Node" parent="."]
-script = ExtResource("3_g1dw6")
-sync_scale = true
-metadata/_custom_type_script = "uid://cf0ws2lij73so"
+[node name="abilities_label" type="Label" parent="Sprite2D"]
+offset_left = -116.667
+offset_top = -323.333
+offset_right = 128.333
+offset_bottom = -278.333
+pivot_offset = Vector2(120, 0)
+theme = ExtResource("7_8ydov")
+theme_override_font_sizes/font_size = 60
+horizontal_alignment = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -84,9 +103,6 @@ texture = SubResource("GradientTexture1D_yw30f")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_yw30f")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_g1dw6")
-
 [node name="PC component" type="Area2D" parent="." node_paths=PackedStringArray("player", "stuck_state")]
 collision_layer = 0
 script = ExtResource("4_yw30f")
@@ -97,5 +113,26 @@ stuck_state = NodePath("../StateMachine/StuckState")
 shape = SubResource("CircleShape2D_g1dw6")
 
 [node name="GroundRay" type="RayCast2D" parent="."]
-target_position = Vector2(0, 150)
+target_position = Vector2(0, 1500)
 collide_with_areas = true
+
+[node name="Boomerang" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_8ydov")
+position = Vector2(-103.333, -120)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("8_x42xx")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_8ydov")
+
+[node name="test" type="Button" parent="."]
+visible = false
+offset_left = 183.333
+offset_top = -83.3333
+offset_right = 302.333
+offset_bottom = -30.3333
+scale = Vector2(1.37577, 1.99452)
+theme = ExtResource("7_8ydov")
+text = "change"
+
+[connection signal="pressed" from="test" to="." method="test_pressed"]

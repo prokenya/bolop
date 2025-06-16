@@ -8,6 +8,14 @@
 
 config_version=5
 
+[addons]
+
+curved_lines_2d/add_collision_enabled=true
+curved_lines_2d/add_stroke_enabled=true
+curved_lines_2d/add_fill_enabled=true
+curved_lines_2d/stroke_width=17.45
+curved_lines_2d/paint_order=0
+
 [application]
 
 config/name="multiplayer fighting"
@@ -18,6 +26,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 MPIO="*res://addons/MultiplayCore/MPIO.gd"
+G="*res://src/core/Global.gd"
 
 [dotnet]
 
@@ -25,7 +34,7 @@ project/assembly_name="multiplayer fighting"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/MultiplayCore/plugin.cfg", "res://addons/finite_state_machine/plugin.cfg")
+enabled=PackedStringArray("res://addons/MultiplayCore/plugin.cfg", "res://addons/curved_lines_2d/plugin.cfg", "res://addons/finite_state_machine/plugin.cfg")
 
 [file_customization]
 
@@ -74,7 +83,10 @@ ui_down={
 [layer_names]
 
 2d_physics/layer_1="platforms"
+2d_physics/layer_2="players"
+2d_physics/layer_3="hitboxes"
 
 [physics]
 
+2d/physics_engine="GodotPhysics2D"
 common/physics_interpolation=true

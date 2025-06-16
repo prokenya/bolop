@@ -73,7 +73,7 @@ func _physics_process(delta):
 	
 		# Sync Rotation
 		if sync_rotation:
-			if _sync_type == "2d" and _parent.rotation - _net_rotation > rotation_sensitivity:
+			if _sync_type == "2d" and absf(_parent.rotation - _net_rotation) > rotation_sensitivity:
 				rpc("_recv_transform", "rot", _parent.rotation)
 			
 			if _sync_type == "3d" and (_parent.rotation - _net_rotation).length() > rotation_sensitivity:

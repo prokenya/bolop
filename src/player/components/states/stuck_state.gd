@@ -7,32 +7,32 @@ class_name StuckState
 
 func _ready() -> void:
 	connect("state_exited",_state_exited)
+	connect("state_entered",_state_entered)
 
 var fixed_distance:float = -20
 var last_direction:Vector2
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
-	
+
 
 func handle_movement(delta: float, direction: Vector2) -> void:
 	var raycast := character.GroundRay as RayCast2D
 	raycast.force_raycast_update()
+	stuck()
 	if not raycast.is_colliding():
-		print("noc")
-		character.velocity = Vector2(character.current_platform.global_position - character.global_position)
+		var dir = Vector2(character.current_platform.global_position - character.global_position)
+		character.velocity = dir
+		character.rotation = dir.angle() - PI/2
 		return
-	
 	var collision_point: Vector2 = raycast.get_collision_point()
 	var wall_normal: Vector2 = raycast.get_collision_normal().normalized()
 	
 
 	var current_distance: float = (collision_point - character.global_position).dot(wall_normal)
-
 	var dist_error: float = fixed_distance - current_distance
+	var vel_normal: float = dist_error * 15
 	
 	var tangent: Vector2 = Vector2(-wall_normal.y, wall_normal.x)
-	
-	var vel_normal: float = dist_error * 15
 	var vel_tangent: float
 	
 #region direction
@@ -47,7 +47,6 @@ func handle_movement(delta: float, direction: Vector2) -> void:
 #endregion
 				
 	character.velocity = tangent * vel_tangent + wall_normal * -vel_normal
-	
 	character.rotation = wall_normal.angle() + PI/2
 	
 	if Input.is_action_just_pressed(mpp.ma("ui_accept")):
@@ -60,15 +59,27 @@ func handle_movement(delta: float, direction: Vector2) -> void:
 				return
 		get_state_machine().current_state = movement_state
 
+var last_platform_position:Vector2
+func stuck():
+	if character.current_platform:
+		var platform = character.current_platform
+		var platform_delta = platform.global_position - last_platform_position
+		#print(platform_delta)
+		character.global_position += platform_delta
+		last_platform_position = platform.global_position
 
-#func _unhandled_input(event: InputEvent) -> void:
-	#if Input.is_action_just_pressed(mpp.ma("ui_accept")):
-		#get_state_machine().current_state = movement_state
+
+func _state_entered():
+	last_platform_position = character.current_platform.global_position
 
 func _state_exited():
-	if absf(character.rotation) < deg_to_rad(120):
+	var angle_from_up = Vector2.UP.angle_to(Vector2(sin(character.rotation), -cos(character.rotation)))
+
+	if absf(angle_from_up) < deg_to_rad(120):
 		var direction = Vector2(sin(character.rotation), -cos(character.rotation)).normalized()
 		var jump_dir = -(Vector2.UP + direction).normalized()
 		character.velocity = character.JUMP_VELOCITY * jump_dir
+
+		
 	character.current_platform = null
 	character.rotation = 0

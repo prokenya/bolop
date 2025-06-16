@@ -1,66 +1,67 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6jwhms6saxq1"]
+[gd_scene load_steps=7 format=3 uid="uid://b6jwhms6saxq1"]
 
 [ext_resource type="Texture2D" uid="uid://cxtbje5680xc" path="res://assets/svg/blok2x1.svg" id="1_1volp"]
+[ext_resource type="PackedScene" uid="uid://btpir5edo6off" path="res://src/worlds/platforms/platform.tscn" id="1_3dwv8"]
 [ext_resource type="Script" uid="uid://cwld5rx6xynb3" path="res://src/worlds/platforms/platform.gd" id="2_j2fbm"]
-[ext_resource type="Texture2D" uid="uid://cpl7alje7eojn" path="res://assets/svg/circle.svg" id="2_y37nm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3dwv8"]
-custom_solver_bias = 1.0
 radius = 284.0
 height = 1136.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_y37nm"]
-radius = 283.1
+[sub_resource type="GDScript" id="GDScript_iidk5"]
+script/source = "extends Area2D
+
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if body is Player:
+		body.global_position = Vector2(0,20)
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gdqrm"]
+size = Vector2(10000, 1209)
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Blok2x1" type="Sprite2D" parent="."]
-position = Vector2(-120, 552)
-rotation = 3.14159
-texture = ExtResource("1_1volp")
+[node name="platform" parent="." instance=ExtResource("1_3dwv8")]
+position = Vector2(-37, 536)
+rotation = -1.5708
 
-[node name="StaticBody2D" type="AnimatableBody2D" parent="Blok2x1"]
-rotation = 1.5708
+[node name="StaticBody2D2" type="RigidBody2D" parent="."]
+position = Vector2(1063, 16)
+rotation = -2.40408
+collision_mask = 7
 script = ExtResource("2_j2fbm")
 metadata/_custom_type_script = "uid://cwld5rx6xynb3"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Blok2x1/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
 shape = SubResource("CapsuleShape2D_3dwv8")
 
-[node name="Circle" type="Sprite2D" parent="."]
-position = Vector2(-817, -46)
-texture = ExtResource("2_y37nm")
-
-[node name="StaticBody2D" type="AnimatableBody2D" parent="Circle"]
-script = ExtResource("2_j2fbm")
-metadata/_custom_type_script = "uid://cwld5rx6xynb3"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Circle/StaticBody2D"]
-shape = SubResource("CircleShape2D_y37nm")
-
-[node name="Circle2" type="Sprite2D" parent="."]
-position = Vector2(-155, -407)
-scale = Vector2(0.265, 0.265)
-texture = ExtResource("2_y37nm")
-
-[node name="StaticBody2D" type="AnimatableBody2D" parent="Circle2"]
-script = ExtResource("2_j2fbm")
-metadata/_custom_type_script = "uid://cwld5rx6xynb3"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Circle2/StaticBody2D"]
-shape = SubResource("CircleShape2D_y37nm")
-
-[node name="Blok2x2" type="Sprite2D" parent="."]
-position = Vector2(766.998, -43.0023)
-rotation = -1.18716
+[node name="Blok2x1" type="Sprite2D" parent="StaticBody2D2"]
+rotation = -1.5708
 texture = ExtResource("1_1volp")
 
-[node name="StaticBody2D" type="AnimatableBody2D" parent="Blok2x2"]
-rotation = 1.5708
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = SubResource("GDScript_iidk5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-37, 1927)
+shape = SubResource("RectangleShape2D_gdqrm")
+
+[node name="StaticBody2D3" type="RigidBody2D" parent="."]
+position = Vector2(-1123, 68)
+rotation = 1.47503
+collision_mask = 7
 script = ExtResource("2_j2fbm")
-animate = true
-next_pos = Vector2(72.065, 0)
 metadata/_custom_type_script = "uid://cwld5rx6xynb3"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Blok2x2/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
 shape = SubResource("CapsuleShape2D_3dwv8")
+
+[node name="Blok2x1" type="Sprite2D" parent="StaticBody2D3"]
+rotation = -1.5708
+texture = ExtResource("1_1volp")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
