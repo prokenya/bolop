@@ -11,9 +11,6 @@ func _ready() -> void:
 
 var fixed_distance:float = -20
 var last_direction:Vector2
-func _physics_process(delta: float) -> void:
-	super._physics_process(delta)
-
 
 func handle_movement(delta: float, direction: Vector2) -> void:
 	var raycast := character.GroundRay as RayCast2D

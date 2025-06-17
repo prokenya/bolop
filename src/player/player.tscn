@@ -127,12 +127,8 @@ replication_config = SubResource("SceneReplicationConfig_8ydov")
 
 [node name="test" type="Button" parent="."]
 visible = false
-offset_left = 183.333
-offset_top = -83.3333
-offset_right = 302.333
-offset_bottom = -30.3333
-scale = Vector2(1.37577, 1.99452)
-theme = ExtResource("7_8ydov")
-text = "change"
-
-[connection signal="pressed" from="test" to="." method="test_pressed"]
+offset_left = -216.667
+offset_top = -663.333
+offset_right = 330.333
+offset_bottom = -366.333
+text = "dsdsd"

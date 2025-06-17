@@ -95,6 +95,9 @@ enum ConnectionState {
 @export var player_scene: PackedScene
 ## The first scene to load
 @export var first_scene: PackedScene
+
+@export var world_sync:Level
+
 ## Should Client authority be assigned automatically?
 @export var assign_client_authority: bool = true
 ## Should the server automatically spawn the player scene?
@@ -706,6 +709,11 @@ func _physics_process(delta):
 
 ## Load scene for all players
 func load_scene(scene_path: String, respawn_players = true):
+	if world_sync:
+		current_scene = world_sync.change_world(scene_path)
+		if respawn_players:
+			players.respawn_node_all()
+		return
 	rpc("_net_load_scene", scene_path, respawn_players)
 
 func _check_if_net_from_id(id):

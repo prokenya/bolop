@@ -1,3 +1,8 @@
+MPTransformSync
+Button
+MultiplayerSpawner
+Level
+MultiplayerSynchronizer
 Node
 Control
 PanelContainer
@@ -5,11 +10,6 @@ TextureRect
 NinePatchRect
 HBoxContainer
 VBoxContainer
-Button
-MultiplayerSynchronizer
 Label
 Platform
 CollisionShape2D
-Line2D
-PinJoint2D
-Sprite2D

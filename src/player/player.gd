@@ -25,16 +25,23 @@ var gravity_direction:Vector2 = Vector2.DOWN
 		abilities_label.text = str(abilities_set)
 	get():
 		return abilities_set
-
+@export var can_move:bool = false
 
 func _ready():
 	if is_multiplayer_authority():
 		camera.make_current()
 		abilities_set = {0: 0, 1: 0, 2: 0}
-		G.connect("set_abilities",func(ab):abilities_set = ab)
+		G.connect("set_abilities",func(ab):abilities_set = ab;can_move = true)
+		if multiplayer.is_server():
+			test.visible = true
+			test.connect("pressed",testf)
 	mpp.player_ready.connect(_on_player_ready)
 	mpp.handshake_ready.connect(_on_handshake_ready)
 
+@onready var test: Button = $test
+
+func testf():
+	MPIO.mpc.load_scene("res://src/worlds/world1.tscn")
 #region mpp calls
 
 # Whn player node is ready, this only emit locally.
@@ -42,7 +49,7 @@ func _on_player_ready():
 	print("Player's now ready!")
 	if !is_multiplayer_authority(): return
 	state_machine.process_mode = Node.PROCESS_MODE_INHERIT
-		
+	position.x += (mpp.player_index * 128)
 
 # On handshake data is ready. This emits to everyone in the server. You can also use it to init something for all players.
 func _on_handshake_ready(hs):

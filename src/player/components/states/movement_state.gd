@@ -14,8 +14,10 @@ class_name MovementState
 
 # Called every physics tick when this state is active.
 func _physics_process(delta):
+	if !is_instance_valid(character): return
 	if mpp and !mpp.is_ready:
 		return
+	if !character.can_move: return
 	var direction = Input.get_vector(mpp.ma("ui_left"), mpp.ma("ui_right"),mpp.ma("ui_up"),mpp.ma("ui_down")).normalized()
 	handle_movement(delta,direction)
 	character.move_and_slide()

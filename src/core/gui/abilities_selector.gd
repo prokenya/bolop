@@ -12,8 +12,16 @@ var selector_current_id: int = 1
 
 var abilities_set: Dictionary = {0: 0, 1: 0, 2: 0}
 
+
 func _input(event: InputEvent) -> void:
 	if !visible:return
+	if Input.is_action_just_pressed("ui_accept"):
+		selector.visible = !selector.visible
+		print("dsaa")
+		selector_current_id = 1
+		if !selector.visible:
+			G.emit_signal("set_abilities",abilities_set)
+	if !selector.visible: return
 	if Input.is_action_just_pressed("ui_right"):
 		move_selector(1)
 	elif Input.is_action_just_pressed("ui_left"):
@@ -22,11 +30,6 @@ func _input(event: InputEvent) -> void:
 		set_ability(-1)
 	elif Input.is_action_just_pressed("ui_down"):
 		set_ability(1)
-	if Input.is_action_just_pressed("ui_accept"):
-		selector.visible = !selector.visible
-		selector_current_id = 1
-		if !selector.visible:
-			G.emit_signal("set_abilities",abilities_set)
 	
 func move_selector(direction: int) -> void:
 	var new_id = selector_current_id + direction

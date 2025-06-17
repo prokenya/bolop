@@ -213,7 +213,7 @@ func _net_despawn():
 		return
 	
 	if player_node:
-		player_node.free()
+		player_node.queue_free()
 		player_node = null
 
 @rpc("any_peer", "call_local")
