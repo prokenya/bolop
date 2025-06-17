@@ -32,16 +32,10 @@ func _ready():
 		camera.make_current()
 		abilities_set = {0: 0, 1: 0, 2: 0}
 		G.connect("set_abilities",func(ab):abilities_set = ab;can_move = true)
-		if multiplayer.is_server():
-			test.visible = true
-			test.connect("pressed",testf)
 	mpp.player_ready.connect(_on_player_ready)
 	mpp.handshake_ready.connect(_on_handshake_ready)
 
-@onready var test: Button = $test
 
-func testf():
-	MPIO.mpc.load_scene("res://src/worlds/world1.tscn")
 #region mpp calls
 
 # Whn player node is ready, this only emit locally.
@@ -57,38 +51,3 @@ func _on_handshake_ready(hs):
 	print_rich("[color=green]player {id}({name}) -> {hs}[/color]".format({"id": mpp.player_index,"name":hs["player_name"],"hs":hs})
 	)
 #endregion
-
-	
-
-#func _physics_process(delta):
-	#if !mpp.is_ready:
-		#return
-		#
-		#
-#
-	## Handle jump.
-	#if Input.is_action_just_pressed(mpp.ma("ui_accept")):
-		#velocity = JUMP_VELOCITY * Vector2(cos(rotation), sin(rotation))
-#
-#
-	## Get the input direction and handle the movement/deceleration
-	## Using UI input actions because it's built-in.
-	#var direction = Input.get_axis(mpp.ma("ui_left"), mpp.ma("ui_right"))
-	#if player_state == player_states.ON_PLATFORM:
-		#follow_point.progress += direction * 5
-		#return	
-	#var player_movement_direction = Vector2(gravity_direction.y,-gravity_direction.x)
-	#if direction:
-		#if player_movement_direction.x != 0:
-			#velocity.x = direction * SPEED * player_movement_direction.x
-		#if player_movement_direction.y != 0:
-			#velocity.y = direction * SPEED * player_movement_direction.y
-	#elif is_on_wall():
-		#velocity.x = move_toward(velocity.x, 0, SPEED)
-		#velocity.y = move_toward(velocity.y, 0, SPEED)
-	#if not is_on_wall():
-		#print("gravity")
-		#velocity += 980 * delta * gravity_direction
-		#
-	#
-	#move_and_slide()

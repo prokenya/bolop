@@ -60,6 +60,8 @@ enum ConnectionError {
 	VERSION_MISMATCH,
 	## Server has been closed
 	SERVER_CLOSED,
+	
+	GAME_HAS_ALREADY_STARTED
 }
 
 ## List of network connection states

@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://dg5wpah0fqkwk"]
+[gd_scene load_steps=16 format=3 uid="uid://dg5wpah0fqkwk"]
 
 [ext_resource type="Script" uid="uid://r57o255hxj8o" path="res://addons/MultiplayCore/MultiPlay.gd" id="1_csopv"]
+[ext_resource type="Script" uid="uid://tqhtpnvacjvk" path="res://src/core/main.gd" id="1_nlf45"]
 [ext_resource type="PackedScene" uid="uid://bkjs7hge7372k" path="res://src/player/player.tscn" id="2_xa854"]
 [ext_resource type="PackedScene" uid="uid://c3in5crpal1p7" path="res://src/worlds/lobby.tscn" id="3_q2b63"]
 [ext_resource type="Script" uid="uid://c26bx74uj1ae6" path="res://addons/MultiplayCore/net_protocols/ENetProtocol.gd" id="4_q2b63"]
@@ -22,6 +23,9 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_nlf45"]
+font_color = Color(1, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_cdskr"]
 length = 0.001
@@ -62,6 +66,8 @@ _data = {
 }
 
 [node name="Main" type="Node"]
+script = ExtResource("1_nlf45")
+worlds = Array[String](["res://src/worlds/lobby.tscn", "res://src/worlds/world1.tscn"])
 
 [node name="MultiPlayCore" type="Node" parent="." node_paths=PackedStringArray("world_sync")]
 script = ExtResource("1_csopv")
@@ -81,8 +87,21 @@ spawner = NodePath("MultiplayerSpawner")
 metadata/_custom_type_script = "uid://d28g4urrooh86"
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="MultiPlayCore/Level"]
-_spawnable_scenes = PackedStringArray("uid://c3in5crpal1p7", "uid://b6jwhms6saxq1")
 spawn_path = NodePath("..")
+
+[node name="test" type="Button" parent="MultiPlayCore"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_top = -291.0
+offset_right = 53.0
+offset_bottom = -104.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "test"
 
 [node name="GUILayer" type="CanvasLayer" parent="."]
 layer = 2
@@ -137,6 +156,7 @@ text = "Connection Failed"
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "Reason: ERR"
+label_settings = SubResource("LabelSettings_nlf45")
 
 [node name="Buttons" type="VBoxContainer" parent="GUILayer/Control/Layout"]
 layout_mode = 2
@@ -207,3 +227,7 @@ text = "Connecting..."
 horizontal_alignment = 1
 
 [node name="abilities_selector" parent="GUILayer" instance=ExtResource("7_nxx65")]
+
+[connection signal="player_connected" from="MultiPlayCore" to="." method="_on_multi_play_core_player_connected"]
+[connection signal="server_started" from="MultiPlayCore" to="." method="_on_multi_play_core_server_started"]
+[connection signal="pressed" from="MultiPlayCore/test" to="." method="testf"]

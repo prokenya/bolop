@@ -124,11 +124,3 @@ texture = ExtResource("8_x42xx")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_8ydov")
-
-[node name="test" type="Button" parent="."]
-visible = false
-offset_left = -216.667
-offset_top = -663.333
-offset_right = 330.333
-offset_bottom = -366.333
-text = "dsdsd"

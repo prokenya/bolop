@@ -1,6 +1,6 @@
-MPTransformSync
 Button
 MultiplayerSpawner
+MPTransformSync
 Level
 MultiplayerSynchronizer
 Node
@@ -12,4 +12,3 @@ HBoxContainer
 VBoxContainer
 Label
 Platform
-CollisionShape2D

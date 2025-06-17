@@ -44,6 +44,7 @@ func open_connecting_ui():
 
 # Close UI when connected to server
 func _on_connected_to_server(_plr):
+	print_debug("conect")
 	visible = false
 
 func _on_connection_error(reason: int):
@@ -57,3 +58,4 @@ func _on_connection_error(reason: int):
 	# Show reason
 	connect_fail_label.text = "Reason: " + reason_codename
 	connect_fail_layout.visible = true
+	G.main.level.clear_worlds()
