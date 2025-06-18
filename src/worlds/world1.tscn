@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b6jwhms6saxq1"]
+[gd_scene load_steps=9 format=3 uid="uid://b6jwhms6saxq1"]
 
 [ext_resource type="Texture2D" uid="uid://cxtbje5680xc" path="res://assets/svg/blok2x1.svg" id="1_1volp"]
 [ext_resource type="PackedScene" uid="uid://btpir5edo6off" path="res://src/worlds/platforms/platform.tscn" id="1_3dwv8"]
@@ -20,6 +20,20 @@ func _on_body_entered(body: Node2D) -> void:
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gdqrm"]
 size = Vector2(10000, 1209)
+
+[sub_resource type="GDScript" id="GDScript_3dwv8"]
+script/source = "extends Area2D
+
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if body is Player:
+		var mpp = body.get_parent() as MPPlayer
+		mpp.despawn_node()
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iidk5"]
+radius = 105.224
 
 [node name="Node2D" type="Node2D"]
 
@@ -64,4 +78,14 @@ shape = SubResource("CapsuleShape2D_3dwv8")
 rotation = -1.5708
 texture = ExtResource("1_1volp")
 
+[node name="Area2D2" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = SubResource("GDScript_3dwv8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(-504, 64)
+shape = SubResource("CircleShape2D_iidk5")
+
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
+[connection signal="body_entered" from="Area2D2" to="Area2D2" method="_on_body_entered"]

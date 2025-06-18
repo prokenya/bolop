@@ -4,8 +4,16 @@ extends MPBase
 
 class_name MultiPlayIO
 
+signal mpc_ready
+
 ## Main MultiPlay Core
-var mpc: MultiPlayCore = null
+var mpc: MultiPlayCore = null:
+	set(value):
+		mpc = value
+		if mpc:
+			mpc_ready.emit()
+	get():
+		return mpc
 var plr_id: int = 0
 
 ## Log data to the output console

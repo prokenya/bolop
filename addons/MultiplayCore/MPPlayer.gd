@@ -15,7 +15,16 @@ var auth_data = {}
 ## Get MultiPlayCore
 var mpc: MultiPlayCore
 ## The player node created from the template, see [member MultiPlayCore.player_scene]
-var player_node: Node
+
+var player_node: Node:
+	set(value):
+		player_node = value
+		if player_node == null:
+			player_despawned.emit()
+			G.player_despawned.emit()
+	get():
+		return player_node
+		
 ## Determines if this player is local
 var is_local: bool = false
 ## Determines if this player network is ready
@@ -35,6 +44,8 @@ var _handshake_is_ready = false
 
 ## On player ready. Only emit locally
 signal player_ready
+## On player node freed. Emit to all players
+signal player_despawned
 ## On handshake data is ready. Emit to all players
 signal handshake_ready(handshake_data: Dictionary)
 ## On swap focused, Swap mode only

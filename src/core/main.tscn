@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dg5wpah0fqkwk"]
+[gd_scene load_steps=19 format=3 uid="uid://dg5wpah0fqkwk"]
 
 [ext_resource type="Script" uid="uid://r57o255hxj8o" path="res://addons/MultiplayCore/MultiPlay.gd" id="1_csopv"]
 [ext_resource type="Script" uid="uid://tqhtpnvacjvk" path="res://src/core/main.gd" id="1_nlf45"]
@@ -8,7 +8,9 @@
 [ext_resource type="Script" uid="uid://d28g4urrooh86" path="res://src/worlds/Level.gd" id="5_2uitn"]
 [ext_resource type="Texture2D" uid="uid://dnkhq55h26c0r" path="res://assets/spinner.png" id="5_xa854"]
 [ext_resource type="Script" uid="uid://d3s4vy20qqra0" path="res://src/core/ServerGUI.gd" id="6_kagtj"]
+[ext_resource type="Script" uid="uid://ibbfnwga5i7p" path="res://src/core/gui/gui.gd" id="7_7o0du"]
 [ext_resource type="PackedScene" uid="uid://dy7n3sq22m4wx" path="res://src/core/gui/abilities_selector.tscn" id="7_nxx65"]
+[ext_resource type="Theme" uid="uid://d0h2lmuclks7q" path="res://src/core/theme.tres" id="8_2in8s"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kagtj"]
 bg_color = Color(0, 0, 0, 0.247059)
@@ -65,6 +67,14 @@ _data = {
 &"spin": SubResource("Animation_osufp")
 }
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_7o0du"]
+properties/0/path = NodePath(".:current_world_id")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:live_players_count")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
 [node name="Main" type="Node"]
 script = ExtResource("1_nlf45")
 worlds = Array[String](["res://src/worlds/lobby.tscn", "res://src/worlds/world1.tscn"])
@@ -89,24 +99,46 @@ metadata/_custom_type_script = "uid://d28g4urrooh86"
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="MultiPlayCore/Level"]
 spawn_path = NodePath("..")
 
-[node name="test" type="Button" parent="MultiPlayCore"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -112.0
-offset_top = -291.0
-offset_right = 53.0
-offset_bottom = -104.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "test"
-
 [node name="GUILayer" type="CanvasLayer" parent="."]
 layer = 2
 
-[node name="Control" type="Panel" parent="GUILayer" node_paths=PackedStringArray("mpc", "host_btn", "join_btn", "address_bar", "player_name_line", "button_layout", "connecting_layout", "connect_fail_layout", "connect_fail_label")]
+[node name="gui" type="Control" parent="GUILayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 530.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_7o0du")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUILayer/gui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUILayer/gui/HBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="abilities_selector" parent="GUILayer/gui/HBoxContainer/VBoxContainer" instance=ExtResource("7_nxx65")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="next_level_button" type="Button" parent="GUILayer/gui/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+theme = ExtResource("8_2in8s")
+text = "next level"
+
+[node name="main menu" type="Panel" parent="GUILayer" node_paths=PackedStringArray("mpc", "host_btn", "join_btn", "address_bar", "player_name_line", "button_layout", "connecting_layout", "connect_fail_layout", "connect_fail_label")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -124,7 +156,7 @@ connecting_layout = NodePath("Layout/Connecting")
 connect_fail_layout = NodePath("Layout/ConnectionFailure")
 connect_fail_label = NodePath("Layout/ConnectionFailure/Layout/Reason")
 
-[node name="Layout" type="VBoxContainer" parent="GUILayer/Control"]
+[node name="Layout" type="VBoxContainer" parent="GUILayer/main menu"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -135,66 +167,67 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 16
 
-[node name="GameTitle" type="Label" parent="GUILayer/Control/Layout"]
+[node name="GameTitle" type="Label" parent="GUILayer/main menu/Layout"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "My Epic Game"
+text = "bolope online"
+horizontal_alignment = 1
 
-[node name="ConnectionFailure" type="PanelContainer" parent="GUILayer/Control/Layout"]
+[node name="ConnectionFailure" type="PanelContainer" parent="GUILayer/main menu/Layout"]
 visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_cus2n")
 
-[node name="Layout" type="VBoxContainer" parent="GUILayer/Control/Layout/ConnectionFailure"]
+[node name="Layout" type="VBoxContainer" parent="GUILayer/main menu/Layout/ConnectionFailure"]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="GUILayer/Control/Layout/ConnectionFailure/Layout"]
+[node name="Title" type="Label" parent="GUILayer/main menu/Layout/ConnectionFailure/Layout"]
 layout_mode = 2
 text = "Connection Failed"
 
-[node name="Reason" type="Label" parent="GUILayer/Control/Layout/ConnectionFailure/Layout"]
+[node name="Reason" type="Label" parent="GUILayer/main menu/Layout/ConnectionFailure/Layout"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "Reason: ERR"
 label_settings = SubResource("LabelSettings_nlf45")
 
-[node name="Buttons" type="VBoxContainer" parent="GUILayer/Control/Layout"]
+[node name="Buttons" type="VBoxContainer" parent="GUILayer/main menu/Layout"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Host" type="Button" parent="GUILayer/Control/Layout/Buttons"]
+[node name="Host" type="Button" parent="GUILayer/main menu/Layout/Buttons"]
 layout_mode = 2
 text = "Host"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GUILayer/Control/Layout/Buttons"]
+[node name="HBoxContainer" type="HBoxContainer" parent="GUILayer/main menu/Layout/Buttons"]
 layout_mode = 2
 
-[node name="Address" type="LineEdit" parent="GUILayer/Control/Layout/Buttons/HBoxContainer"]
+[node name="Address" type="LineEdit" parent="GUILayer/main menu/Layout/Buttons/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "127.0.0.1:4200"
 placeholder_text = "Address"
 
-[node name="Join" type="Button" parent="GUILayer/Control/Layout/Buttons/HBoxContainer"]
+[node name="Join" type="Button" parent="GUILayer/main menu/Layout/Buttons/HBoxContainer"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 text = "Join"
 
-[node name="player_name_line" type="LineEdit" parent="GUILayer/Control/Layout/Buttons"]
+[node name="player_name_line" type="LineEdit" parent="GUILayer/main menu/Layout/Buttons"]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Name"
 
-[node name="Connecting" type="VBoxContainer" parent="GUILayer/Control/Layout"]
+[node name="Connecting" type="VBoxContainer" parent="GUILayer/main menu/Layout"]
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Spinner" type="Control" parent="GUILayer/Control/Layout/Connecting"]
+[node name="Spinner" type="Control" parent="GUILayer/main menu/Layout/Connecting"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="GUILayer/Control/Layout/Connecting/Spinner"]
+[node name="TextureRect" type="TextureRect" parent="GUILayer/main menu/Layout/Connecting/Spinner"]
 modulate = Color(1, 1, 1, 0.678431)
 layout_mode = 1
 anchors_preset = 8
@@ -213,21 +246,22 @@ texture = ExtResource("5_xa854")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="GUILayer/Control/Layout/Connecting/Spinner"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GUILayer/main menu/Layout/Connecting/Spinner"]
 libraries = {
 &"": SubResource("AnimationLibrary_bhxad")
 }
 autoplay = "spin"
 
-[node name="Label" type="Label" parent="GUILayer/Control/Layout/Connecting"]
+[node name="Label" type="Label" parent="GUILayer/main menu/Layout/Connecting"]
 modulate = Color(1, 1, 1, 0.498039)
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Connecting..."
 horizontal_alignment = 1
 
-[node name="abilities_selector" parent="GUILayer" instance=ExtResource("7_nxx65")]
+[node name="Main sync" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_7o0du")
 
 [connection signal="player_connected" from="MultiPlayCore" to="." method="_on_multi_play_core_player_connected"]
 [connection signal="server_started" from="MultiPlayCore" to="." method="_on_multi_play_core_server_started"]
-[connection signal="pressed" from="MultiPlayCore/test" to="." method="testf"]
+[connection signal="pressed" from="GUILayer/gui/HBoxContainer/next_level_button" to="GUILayer/gui" method="_on_next_level_button_pressed"]

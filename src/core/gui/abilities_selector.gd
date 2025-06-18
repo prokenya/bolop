@@ -13,6 +13,13 @@ var selector_current_id: int = 1
 var abilities_set: Dictionary = {0: 0, 1: 0, 2: 0}
 
 
+func emit_set_abilities():
+	G.emit_signal("set_abilities",abilities_set)
+func show_abilities_selector(show:bool = true):
+	visible = show
+	selector.visible = show
+	selector_current_id = 1
+
 func _input(event: InputEvent) -> void:
 	if !visible:return
 	
@@ -20,7 +27,7 @@ func _input(event: InputEvent) -> void:
 		selector.visible = !selector.visible
 		selector_current_id = 1
 		if !selector.visible:
-			G.emit_signal("set_abilities",abilities_set)
+			emit_set_abilities()
 	
 	if !selector.visible: return
 	

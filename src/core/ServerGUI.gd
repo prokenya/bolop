@@ -44,8 +44,8 @@ func open_connecting_ui():
 
 # Close UI when connected to server
 func _on_connected_to_server(_plr):
-	print_debug("conect")
 	visible = false
+	G.main.in_lobby.emit()
 
 func _on_connection_error(reason: int):
 	# Get value string of reason enum

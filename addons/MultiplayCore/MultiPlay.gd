@@ -715,6 +715,7 @@ func load_scene(scene_path: String, respawn_players = true):
 		current_scene = world_sync.change_world(scene_path)
 		if respawn_players:
 			players.respawn_node_all()
+			scene_loaded.emit()
 		return
 	rpc("_net_load_scene", scene_path, respawn_players)
 
@@ -722,7 +723,7 @@ func _check_if_net_from_id(id):
 	if mode != PlayMode.Online:
 		return true
 	return multiplayer.get_remote_sender_id() == id
-
+	
 @rpc("authority", "call_local", "reliable")
 func _net_load_scene(scene_path: String, respawn_players = true):
 	_net_data.current_scene_path = scene_path

@@ -40,14 +40,12 @@ func _ready():
 
 # Whn player node is ready, this only emit locally.
 func _on_player_ready():
-	print("Player's now ready!")
-	if !is_multiplayer_authority(): return
+	#print("Player's now ready!")
 	state_machine.process_mode = Node.PROCESS_MODE_INHERIT
 	position.x += (mpp.player_index * 128)
 
 # On handshake data is ready. This emits to everyone in the server. You can also use it to init something for all players.
 func _on_handshake_ready(hs):
 	player_name.text = hs["player_name"]
-	print_rich("[color=green]player {id}({name}) -> {hs}[/color]".format({"id": mpp.player_index,"name":hs["player_name"],"hs":hs})
-	)
+	#print_rich("[color=green]player {id}({name}) -> {hs}[/color]".format({"id": mpp.player_index,"name":hs["player_name"],"hs":hs}))
 #endregion
