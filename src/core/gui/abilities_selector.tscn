@@ -35,10 +35,10 @@ gradient = SubResource("Gradient_lg13k")
 width = 16
 height = 16
 
-[sub_resource type="Gradient" id="Gradient_euhwp"]
+[sub_resource type="Gradient" id="Gradient_2dgbg"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_lg13k"]
-gradient = SubResource("Gradient_euhwp")
+gradient = SubResource("Gradient_2dgbg")
 
 [node name="abilities_selector" type="PanelContainer"]
 anchors_preset = 2

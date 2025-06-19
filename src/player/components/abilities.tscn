@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvydtw45d6jok"]
+
+[ext_resource type="Script" uid="uid://dsek11dwed3c1" path="res://src/player/components/abilities.gd" id="1_88m5e"]
+
+[sub_resource type="Gradient" id="Gradient_euhwp"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_p2ilk"]
+gradient = SubResource("Gradient_euhwp")
+
+[node name="abilities_component" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+pivot_offset = Vector2(100, 32)
+script = ExtResource("1_88m5e")
+
+[node name="abilities" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+offset_right = 200.0
+offset_bottom = 64.0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="abilities"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_p2ilk")
+
+[node name="TextureRect2" type="TextureRect" parent="abilities"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_p2ilk")
+
+[node name="TextureRect3" type="TextureRect" parent="abilities"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_p2ilk")
+
+[node name="abilities_timers" type="Node" parent="abilities"]
+
+[node name="ability_timer1" type="Timer" parent="abilities/abilities_timers"]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="ability_timer2" type="Timer" parent="abilities/abilities_timers"]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="ability_timer3" type="Timer" parent="abilities/abilities_timers"]
+unique_name_in_owner = true
+one_shot = true

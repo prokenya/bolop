@@ -34,7 +34,7 @@ project/assembly_name="multiplayer fighting"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/MultiplayCore/plugin.cfg", "res://addons/curved_lines_2d/plugin.cfg", "res://addons/finite_state_machine/plugin.cfg", "res://addons/script-ide/plugin.cfg")
+enabled=PackedStringArray("res://addons/MultiplayCore/plugin.cfg", "res://addons/curved_lines_2d/plugin.cfg", "res://addons/finite_state_machine/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/simple_gdscript_formatter/plugin.cfg")
 
 [file_customization]
 

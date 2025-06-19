@@ -15,7 +15,9 @@ var last_direction:Vector2
 func handle_movement(delta: float, direction: Vector2) -> void:
 	var raycast := character.GroundRay as RayCast2D
 	raycast.force_raycast_update()
+	
 	stuck()
+	
 	if not raycast.is_colliding():
 		var dir = Vector2(character.current_platform.global_position - character.global_position)
 		character.velocity = dir
@@ -44,7 +46,7 @@ func handle_movement(delta: float, direction: Vector2) -> void:
 #endregion
 				
 	character.velocity = tangent * vel_tangent + wall_normal * -vel_normal
-	character.rotation = wall_normal.angle() + PI/2
+	character.sprite.rotation = wall_normal.angle() + PI/2
 	
 	if Input.is_action_just_pressed(mpp.ma("ui_accept")):
 		if pc_component.platforms.size() > 1:
@@ -52,7 +54,7 @@ func handle_movement(delta: float, direction: Vector2) -> void:
 			if last_platform != null:
 				pc_component.platforms.push_front(last_platform)
 				character.current_platform = last_platform
-				character.rotation = Vector2(last_platform.global_position - character.global_position).angle() - PI/2
+				character.sprite.rotation = Vector2(last_platform.global_position - character.global_position).angle() - PI/2
 				return
 		get_state_machine().current_state = movement_state
 
@@ -73,10 +75,10 @@ func _state_exited():
 	var angle_from_up = Vector2.UP.angle_to(Vector2(sin(character.rotation), -cos(character.rotation)))
 
 	if absf(angle_from_up) < deg_to_rad(120):
-		var direction = Vector2(sin(character.rotation), -cos(character.rotation)).normalized()
+		var direction = Vector2(sin(character.sprite.rotation), -cos(character.sprite.rotation)).normalized()
 		var jump_dir = -(Vector2.UP + direction).normalized()
 		character.velocity = character.JUMP_VELOCITY * jump_dir
 
 		
 	character.current_platform = null
-	character.rotation = 0
+	character.sprite.rotation = 0

@@ -22,7 +22,7 @@ func _entered(body:Node2D):
 		player.current_platform = body
 		if state_machine.current_state is AttackState:return
 		player.state_machine.current_state = stuck_state
-		player.rotation = Vector2(body.global_position - player.global_position).angle() - PI/2
+		player.sprite.rotation = Vector2(body.global_position - player.global_position).angle() - PI/2
 	
 func _exited(body:Node2D):
 	if body is Platform:

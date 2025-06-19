@@ -1,11 +1,11 @@
-res://src/core/gui/abilities_selector.tscn
-res://src/shaders/item_color.gdshader
 res://src/player/player.tscn
+res://src/shaders/item_color.gdshader
+res://src/core/gui/abilities.tscn
+res://src/player/components/abilities.tscn
+res://src/player/components/abilities.gd
 res://src/player/player.gd
-res://src/player/components/states/attack_state.gd
 res://src/core/main.tscn
 res://src/worlds/world1.tscn
 res://src/worlds/lobby.tscn
 res://src/worlds/platforms/platform.tscn
-res://src/player/components/states/movement_state.gd
-res://src/player/components/platform_connect_component.gd
+res://src/core/gui/abilities_selector.tscn
