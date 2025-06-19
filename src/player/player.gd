@@ -25,6 +25,12 @@ var gravity_direction:Vector2 = Vector2.DOWN
 		abilities_label.text = str(abilities_set)
 	get():
 		return abilities_set
+
+@onready var ability_timer_1: Timer = $abilities_timer/ability_timer1
+@onready var ability_timer_2: Timer = $abilities_timer/ability_timer2
+@onready var ability_timer_3: Timer = $abilities_timer/ability_timer3
+
+
 @export var can_move:bool = false
 
 func _ready():
@@ -35,7 +41,32 @@ func _ready():
 	mpp.player_ready.connect(_on_player_ready)
 	mpp.handshake_ready.connect(_on_handshake_ready)
 
-
+@export var attack_state:StateMachineState
+@export var movement_state:StateMachineState
+@export var stuck_state:StateMachineState
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("LMB"):
+		state_machine.current_state = attack_state
+	if Input.is_action_just_pressed("MMB"):
+		state_machine.current_state = attack_state
+	if Input.is_action_just_pressed("RMB"):
+		state_machine.current_state = attack_state
+		
+	if Input.is_action_just_released("LMB"):
+		if current_platform:
+			state_machine.current_state = stuck_state
+			return
+		state_machine.current_state = movement_state
+	if Input.is_action_just_released("MMB"):
+		if current_platform:
+			state_machine.current_state = stuck_state
+			return
+		state_machine.current_state = movement_state
+	if Input.is_action_just_released("RMB"):
+		if current_platform:
+			state_machine.current_state = stuck_state
+			return
+		state_machine.current_state = movement_state
 #region mpp calls
 
 # Whn player node is ready, this only emit locally.

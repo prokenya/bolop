@@ -24,7 +24,8 @@ func _physics_process(delta):
  
 func handle_movement(delta:float,direction:Vector2):
 	character.velocity.x = move_toward(character.velocity.x, speed * direction.x, acceleration * delta)
-	character.velocity.y += character.gravity * delta
+	if !character.is_on_wall():
+		character.velocity.y += character.gravity * delta
 
 # Called when there is an input event when this state is active.
 #func _unhandled_input(event: InputEvent) -> void:
