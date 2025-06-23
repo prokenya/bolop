@@ -69,7 +69,8 @@ func stuck():
 
 
 func _state_entered():
-	last_platform_position = character.current_platform.global_position
+	if character.current_platform:
+		last_platform_position = character.current_platform.global_position
 
 func _state_exited():
 	var angle_from_up = Vector2.UP.angle_to(Vector2(sin(character.rotation), -cos(character.rotation)))

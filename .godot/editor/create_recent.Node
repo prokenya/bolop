@@ -1,9 +1,10 @@
-Control
+TextureProgressBar
+Timer
 Node
+Control
 Node2D
 RemoteTransform2D
 AttackState
-Timer
 Area2D
 CollisionShape2D
 MultiplayerSynchronizer

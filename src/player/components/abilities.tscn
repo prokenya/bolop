@@ -1,11 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://dvydtw45d6jok"]
+[gd_scene load_steps=6 format=3 uid="uid://dvydtw45d6jok"]
 
 [ext_resource type="Script" uid="uid://dsek11dwed3c1" path="res://src/player/components/abilities.gd" id="1_88m5e"]
 
-[sub_resource type="Gradient" id="Gradient_euhwp"]
+[sub_resource type="Gradient" id="Gradient_bdjoe"]
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_p2ilk"]
-gradient = SubResource("Gradient_euhwp")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jt55x"]
+gradient = SubResource("Gradient_bdjoe")
+
+[sub_resource type="Gradient" id="Gradient_peo7l"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_op7en"]
+gradient = SubResource("Gradient_peo7l")
 
 [node name="abilities_component" type="Control"]
 layout_mode = 3
@@ -15,6 +21,7 @@ script = ExtResource("1_88m5e")
 
 [node name="abilities" type="HBoxContainer" parent="."]
 unique_name_in_owner = true
+layout_mode = 0
 offset_right = 200.0
 offset_bottom = 64.0
 size_flags_horizontal = 4
@@ -22,17 +29,29 @@ size_flags_vertical = 8
 theme_override_constants/separation = 4
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="abilities"]
+[node name="ability1" type="TextureProgressBar" parent="abilities"]
+unique_name_in_owner = true
 layout_mode = 2
-texture = SubResource("GradientTexture2D_p2ilk")
+fill_mode = 3
+texture_under = SubResource("GradientTexture2D_jt55x")
+texture_progress = SubResource("GradientTexture2D_op7en")
+tint_progress = Color(1, 1, 1, 0.784314)
 
-[node name="TextureRect2" type="TextureRect" parent="abilities"]
+[node name="ability2" type="TextureProgressBar" parent="abilities"]
+unique_name_in_owner = true
 layout_mode = 2
-texture = SubResource("GradientTexture2D_p2ilk")
+fill_mode = 3
+texture_under = SubResource("GradientTexture2D_jt55x")
+texture_progress = SubResource("GradientTexture2D_op7en")
+tint_progress = Color(1, 1, 1, 0.784314)
 
-[node name="TextureRect3" type="TextureRect" parent="abilities"]
+[node name="ability3" type="TextureProgressBar" parent="abilities"]
+unique_name_in_owner = true
 layout_mode = 2
-texture = SubResource("GradientTexture2D_p2ilk")
+fill_mode = 3
+texture_under = SubResource("GradientTexture2D_jt55x")
+texture_progress = SubResource("GradientTexture2D_op7en")
+tint_progress = Color(1, 1, 1, 0.784314)
 
 [node name="abilities_timers" type="Node" parent="abilities"]
 

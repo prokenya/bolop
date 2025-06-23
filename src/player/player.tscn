@@ -13,6 +13,11 @@
 [ext_resource type="Texture2D" uid="uid://weg15dm68o5n" path="res://assets/svg/weapons/boomerang.svg" id="8_x42xx"]
 [ext_resource type="PackedScene" uid="uid://dvydtw45d6jok" path="res://src/player/components/abilities.tscn" id="9_cwolq"]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8ydov"]
+properties/0/path = NodePath(".:abilities_set")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_yw30f"]
 radius = 55.0
 
@@ -23,11 +28,6 @@ radius = 58.0
 shader = ExtResource("8_l271a")
 shader_parameter/target_collor = Color(0.2, 0.2, 0.2, 1)
 shader_parameter/set_collor = Color(1, 0.31307, 0.731336, 1)
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8ydov"]
-properties/0/path = NodePath(".:abilities_set")
-properties/0/spawn = true
-properties/0/replication_mode = 2
 
 [node name="player" type="CharacterBody2D"]
 scale = Vector2(0.3, 0.3)
@@ -65,6 +65,9 @@ script = ExtResource("3_g1dw6")
 lerp_speed = 50
 sync_scale = true
 metadata/_custom_type_script = "uid://cf0ws2lij73so"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_8ydov")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_rkbax")
@@ -118,9 +121,6 @@ position = Vector2(-103.333, -120)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("8_x42xx")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_8ydov")
-
 [node name="abilities component" parent="." node_paths=PackedStringArray("player", "state_machine", "attack_state", "stuck_state", "movement_state") instance=ExtResource("9_cwolq")]
 anchors_preset = 8
 anchor_left = 0.5
@@ -133,13 +133,11 @@ offset_right = -100.0
 offset_bottom = -300.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(2, 2)
 player = NodePath("..")
 state_machine = NodePath("../StateMachine")
 attack_state = NodePath("../StateMachine/AttackState")
 stuck_state = NodePath("../StateMachine/StuckState")
 movement_state = NodePath("../StateMachine/MovementState")
-
-[node name="abilities" parent="abilities component" index="0"]
-layout_mode = 0
 
 [editable path="abilities component"]

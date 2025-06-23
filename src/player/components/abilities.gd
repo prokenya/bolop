@@ -10,7 +10,13 @@ extends Control
 var actions: Array[String] = ["LMB", "MMB", "RMB"]
 var currnet_action_index: int = -1
 
+@onready var abilities: Array[TextureProgressBar] = [%ability1, %ability2, %ability3]
+
 @onready var abilities_timers: Array[Timer] = [%ability_timer1, %ability_timer2, %ability_timer3]
+
+
+func _physics_process(delta: float) -> void:
+	animate_actions_cooldown()
 
 
 func _input(event: InputEvent) -> void:
@@ -30,3 +36,10 @@ func _input(event: InputEvent) -> void:
 			currnet_action_index = -1
 			state_machine.current_state = stuck_state if player.current_platform else movement_state
 			return
+
+
+func animate_actions_cooldown():
+	for action_index in range(len(actions)):
+		var timer: Timer = abilities_timers[action_index]
+		var progress = clamp((timer.time_left / timer.wait_time) * 100, 0, 100)
+		abilities[action_index].value = progress
