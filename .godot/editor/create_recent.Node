@@ -1,3 +1,4 @@
+Button
 TextureProgressBar
 Timer
 Node
@@ -8,8 +9,6 @@ AttackState
 Area2D
 CollisionShape2D
 MultiplayerSynchronizer
-Button
 HBoxContainer
 VBoxContainer
 MultiplayerSpawner
-MPTransformSync

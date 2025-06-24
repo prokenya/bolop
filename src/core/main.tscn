@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://d3s4vy20qqra0" path="res://src/core/ServerGUI.gd" id="6_kagtj"]
 [ext_resource type="Script" uid="uid://ibbfnwga5i7p" path="res://src/core/gui/gui.gd" id="7_7o0du"]
 [ext_resource type="PackedScene" uid="uid://dy7n3sq22m4wx" path="res://src/core/gui/abilities_selector.tscn" id="7_nxx65"]
-[ext_resource type="Theme" uid="uid://d0h2lmuclks7q" path="res://src/core/theme.tres" id="8_2in8s"]
+[ext_resource type="Theme" uid="uid://d0h2lmuclks7q" path="res://src/core/resources/theme.tres" id="8_2in8s"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kagtj"]
 bg_color = Color(0, 0, 0, 0.247059)
@@ -80,6 +80,7 @@ script = ExtResource("1_nlf45")
 worlds = Array[String](["res://src/worlds/lobby.tscn", "res://src/worlds/world1.tscn"])
 
 [node name="MultiPlayCore" type="Node" parent="." node_paths=PackedStringArray("world_sync")]
+unique_name_in_owner = true
 script = ExtResource("1_csopv")
 max_players = 6
 player_scene = ExtResource("2_xa854")

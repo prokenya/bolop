@@ -18,12 +18,12 @@ var gravity_direction:Vector2 = Vector2.DOWN
 
 @onready var GroundRay: RayCast2D = %GroundRay
 
-@onready var abilities_label: Label = $Sprite2D/abilities_label
+@onready var abilities_component: Control = $"abilities component"
 
 @export var abilities_set: Dictionary = {0: 0, 1: 0, 2: 0}:
 	set(value):
 		abilities_set = value
-		abilities_label.text = str(abilities_set)
+		abilities_component.set_abilities(abilities_set)
 	get():
 		return abilities_set
 

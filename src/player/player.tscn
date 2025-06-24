@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bkjs7hge7372k"]
+[gd_scene load_steps=16 format=3 uid="uid://bkjs7hge7372k"]
 
 [ext_resource type="Script" uid="uid://cepd6vn07wyx5" path="res://src/player/player.gd" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://dwqv65m8ieqgg" path="res://addons/finite_state_machine/scripts/state_machine.gd" id="2_jiejy"]
@@ -8,7 +8,6 @@
 [ext_resource type="Script" uid="uid://da7bm1n6ciq12" path="res://src/player/components/states/stuck_state.gd" id="4_o822w"]
 [ext_resource type="Script" uid="uid://bmnoykt41qebx" path="res://src/player/components/platform_connect_component.gd" id="4_yw30f"]
 [ext_resource type="Script" uid="uid://7kj1fb7eiojt" path="res://src/player/components/states/attack_state.gd" id="5_ylhto"]
-[ext_resource type="Theme" uid="uid://d0h2lmuclks7q" path="res://src/core/theme.tres" id="7_8ydov"]
 [ext_resource type="Shader" uid="uid://ctbold875u364" path="res://src/shaders/item_color.gdshader" id="8_l271a"]
 [ext_resource type="Texture2D" uid="uid://weg15dm68o5n" path="res://assets/svg/weapons/boomerang.svg" id="8_x42xx"]
 [ext_resource type="PackedScene" uid="uid://dvydtw45d6jok" path="res://src/player/components/abilities.tscn" id="9_cwolq"]
@@ -84,16 +83,6 @@ offset_right = 4.464
 offset_bottom = -29.44
 theme_override_font_sizes/font_size = 50
 text = "name"
-horizontal_alignment = 1
-
-[node name="abilities_label" type="Label" parent="Sprite2D"]
-offset_left = -116.667
-offset_top = -323.333
-offset_right = 128.333
-offset_bottom = -278.333
-pivot_offset = Vector2(120, 0)
-theme = ExtResource("7_8ydov")
-theme_override_font_sizes/font_size = 60
 horizontal_alignment = 1
 
 [node name="GroundRay" type="RayCast2D" parent="Sprite2D"]

@@ -18,7 +18,7 @@ curved_lines_2d/paint_order=0
 
 [application]
 
-config/name="multiplayer fighting"
+config/name="bolop"
 run/main_scene="uid://dg5wpah0fqkwk"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"

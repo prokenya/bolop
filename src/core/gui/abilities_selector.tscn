@@ -1,32 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://dy7n3sq22m4wx"]
+[gd_scene load_steps=6 format=3 uid="uid://dy7n3sq22m4wx"]
 
 [ext_resource type="Script" uid="uid://cfipxwbylolly" path="res://src/core/gui/abilities_selector.gd" id="1_lg13k"]
-
-[sub_resource type="Gradient" id="Gradient_0w40q"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_2dgbg"]
-gradient = SubResource("Gradient_0w40q")
-
-[sub_resource type="Gradient" id="Gradient_k456d"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_mfs87"]
-gradient = SubResource("Gradient_k456d")
-fill_from = Vector2(0.850427, 0.162393)
-
-[sub_resource type="Gradient" id="Gradient_k6k2p"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_4ies7"]
-gradient = SubResource("Gradient_k6k2p")
-fill_from = Vector2(1, 0)
-fill_to = Vector2(0.730769, 0.350427)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_f7rhu"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_v8sxs"]
-width = 64
-height = 64
-invert = true
-noise = SubResource("FastNoiseLite_f7rhu")
 
 [sub_resource type="Gradient" id="Gradient_lg13k"]
 
@@ -50,7 +24,6 @@ offset_right = 212.0
 offset_bottom = 1.0
 grow_vertical = 0
 script = ExtResource("1_lg13k")
-abilities_textures = Array[Texture]([SubResource("GradientTexture2D_2dgbg"), SubResource("GradientTexture2D_mfs87"), SubResource("GradientTexture2D_4ies7"), SubResource("NoiseTexture2D_v8sxs")])
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
