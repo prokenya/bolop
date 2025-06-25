@@ -1,18 +1,28 @@
-[gd_scene load_steps=7 format=3 uid="uid://dvydtw45d6jok"]
+[gd_scene load_steps=6 format=3 uid="uid://dvydtw45d6jok"]
 
 [ext_resource type="Script" uid="uid://dsek11dwed3c1" path="res://src/player/components/abilities.gd" id="1_88m5e"]
 [ext_resource type="Texture2D" uid="uid://bavx8d7qr4iip" path="res://assets/svg/abilities/ability_base.svg" id="2_jt55x"]
 
 [sub_resource type="Gradient" id="Gradient_peo7l"]
-colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+offsets = PackedFloat32Array(0.689189, 0.716216)
+colors = PackedColorArray(0, 0, 0, 0.914634, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_op7en"]
 gradient = SubResource("Gradient_peo7l")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
 
-[sub_resource type="Gradient" id="Gradient_bdjoe"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_jt55x"]
-gradient = SubResource("Gradient_bdjoe")
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jt55x"]
+properties/0/path = NodePath("abilities/ability1:value")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath("abilities/ability2:value")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath("abilities/ability3:value")
+properties/2/spawn = true
+properties/2/replication_mode = 2
 
 [node name="abilities_component" type="Control"]
 layout_mode = 3
@@ -42,7 +52,7 @@ tint_progress = Color(1, 1, 1, 0.784314)
 unique_name_in_owner = true
 layout_mode = 2
 fill_mode = 3
-texture_under = SubResource("GradientTexture2D_jt55x")
+texture_under = ExtResource("2_jt55x")
 texture_progress = SubResource("GradientTexture2D_op7en")
 tint_progress = Color(1, 1, 1, 0.784314)
 
@@ -50,7 +60,7 @@ tint_progress = Color(1, 1, 1, 0.784314)
 unique_name_in_owner = true
 layout_mode = 2
 fill_mode = 3
-texture_under = SubResource("GradientTexture2D_jt55x")
+texture_under = ExtResource("2_jt55x")
 texture_progress = SubResource("GradientTexture2D_op7en")
 tint_progress = Color(1, 1, 1, 0.784314)
 
@@ -58,12 +68,18 @@ tint_progress = Color(1, 1, 1, 0.784314)
 
 [node name="ability_timer1" type="Timer" parent="abilities/abilities_timers"]
 unique_name_in_owner = true
+wait_time = 2.0
 one_shot = true
 
 [node name="ability_timer2" type="Timer" parent="abilities/abilities_timers"]
 unique_name_in_owner = true
+wait_time = 2.0
 one_shot = true
 
 [node name="ability_timer3" type="Timer" parent="abilities/abilities_timers"]
 unique_name_in_owner = true
+wait_time = 2.0
 one_shot = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_jt55x")

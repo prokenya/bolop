@@ -45,7 +45,6 @@ polygon = PackedVector2Array(1209.29, -225.255, 1227.83, -224.319, 1245.83, -221
 [node name="platform2" parent="." instance=ExtResource("1_g5d6w")]
 position = Vector2(-1136, -448)
 rotation = 1.57079
-joint_softness = 16.0
 
 [node name="Platform2" type="RigidBody2D" parent="."]
 position = Vector2(-16, -1256)

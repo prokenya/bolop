@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dy7n3sq22m4wx"]
+[gd_scene load_steps=5 format=3 uid="uid://dy7n3sq22m4wx"]
 
 [ext_resource type="Script" uid="uid://cfipxwbylolly" path="res://src/core/gui/abilities_selector.gd" id="1_lg13k"]
+[ext_resource type="Texture2D" uid="uid://bqd6bupmo6yef" path="res://assets/svg/abilities/ability_wind.svg" id="2_0w40q"]
 
 [sub_resource type="Gradient" id="Gradient_lg13k"]
 
@@ -8,11 +9,6 @@
 gradient = SubResource("Gradient_lg13k")
 width = 16
 height = 16
-
-[sub_resource type="Gradient" id="Gradient_2dgbg"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_lg13k"]
-gradient = SubResource("Gradient_2dgbg")
 
 [node name="abilities_selector" type="PanelContainer"]
 anchors_preset = 2
@@ -46,12 +42,12 @@ alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/abilities_set"]
 layout_mode = 2
-texture = SubResource("GradientTexture2D_lg13k")
+texture = ExtResource("2_0w40q")
 
 [node name="TextureRect2" type="TextureRect" parent="VBoxContainer/abilities_set"]
 layout_mode = 2
-texture = SubResource("GradientTexture2D_lg13k")
+texture = ExtResource("2_0w40q")
 
 [node name="TextureRect3" type="TextureRect" parent="VBoxContainer/abilities_set"]
 layout_mode = 2
-texture = SubResource("GradientTexture2D_lg13k")
+texture = ExtResource("2_0w40q")

@@ -2,7 +2,7 @@ extends RigidBody2D
 class_name Platform
 
 @onready var joint:PinJoint2D = PinJoint2D.new()
-@export_range(0,16,0.1) var joint_softness:float = 4
+@export_range(0,16,0.1) var joint_softness:float = 16
 func _ready() -> void:
 	gravity_scale = 0
 	create_joint()

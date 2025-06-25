@@ -44,6 +44,8 @@ var _handshake_is_ready = false
 
 ## On player ready. Only emit locally
 signal player_ready
+## On player node spawned. Emit to all players
+signal player_spawned(player:Player)
 ## On player node freed. Emit to all players
 signal player_despawned
 ## On handshake data is ready. Emit to all players
@@ -249,6 +251,7 @@ func _net_spawn_node():
 		
 		if is_local:
 			player_ready.emit()
+			player_spawned.emit(pscene)
 		
 		if mpc.mode == mpc.PlayMode.Swap:
 			mpc.swap_to(0)

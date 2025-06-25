@@ -18,7 +18,7 @@ var gravity_direction:Vector2 = Vector2.DOWN
 
 @onready var GroundRay: RayCast2D = %GroundRay
 
-@onready var abilities_component: Control = $"abilities component"
+@onready var abilities_component: AbilitiesComponent = $"abilities component"
 
 @export var abilities_set: Dictionary = {0: 0, 1: 0, 2: 0}:
 	set(value):

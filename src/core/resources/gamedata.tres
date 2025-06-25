@@ -1,15 +1,10 @@
-[gd_resource type="Resource" script_class="Data" load_steps=5 format=3 uid="uid://di4xtdi7wi74y"]
+[gd_resource type="Resource" script_class="Data" load_steps=4 format=3 uid="uid://di4xtdi7wi74y"]
 
 [ext_resource type="Texture2D" uid="uid://bavx8d7qr4iip" path="res://assets/svg/abilities/ability_base.svg" id="1_4jvml"]
 [ext_resource type="Script" uid="uid://cs37x00g0nq5s" path="res://src/core/resources/data.gd" id="1_rlmwv"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_dfiv8"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xwnsd"]
-width = 64
-height = 64
-noise = SubResource("FastNoiseLite_dfiv8")
+[ext_resource type="Texture2D" uid="uid://bqd6bupmo6yef" path="res://assets/svg/abilities/ability_wind.svg" id="2_vog15"]
 
 [resource]
 script = ExtResource("1_rlmwv")
-abilities_icons = Array[Texture2D]([ExtResource("1_4jvml"), SubResource("NoiseTexture2D_xwnsd")])
+abilities_icons = Array[Texture2D]([ExtResource("2_vog15"), ExtResource("1_4jvml")])
+abilities_paths = Array[String](["res://src/abilities/wind.tscn"])

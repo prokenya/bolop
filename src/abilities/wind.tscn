@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8so3oymb27va"]
+
+[ext_resource type="Script" uid="uid://1wbw4r27epwu" path="res://src/abilities/wind.gd" id="1_yfagw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yfagw"]
+size = Vector2(250, 250)
+
+[node name="wind" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_yfagw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_yfagw")

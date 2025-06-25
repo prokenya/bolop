@@ -3,6 +3,8 @@ class_name Data
 
 @export var abilities_icons:Array[Texture2D]
 
+@export var abilities_paths:Array[String]
+
 func save() -> void:
 	ResourceSaver.save(self, "res://src/core/resources/gamedata.tres")
 

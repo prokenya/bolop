@@ -1,3 +1,4 @@
+class_name AbilitiesComponent
 extends Control
 
 @onready var abilities_timers: Array[Timer] = [%ability_timer1, %ability_timer2, %ability_timer3]
@@ -19,10 +20,12 @@ var currnet_action_index: int = -1
 
 
 func _physics_process(delta: float) -> void:
+	if !is_multiplayer_authority():return
 	animate_actions_cooldown()
 
 
 func _input(event: InputEvent) -> void:
+	if !is_multiplayer_authority():return
 	for action in actions:
 
 		if Input.is_action_just_pressed(action):
@@ -30,24 +33,31 @@ func _input(event: InputEvent) -> void:
 			currnet_action_index = actions.find(action)
 
 			if !abilities_timers[currnet_action_index].is_stopped(): continue
-			state_machine.current_state = attack_state
+
+			if state_machine.current_state == movement_state:
+				state_machine.current_state = attack_state
+
 			action_pressed.emit(currnet_action_index)
 			return
 	if currnet_action_index == -1: return
 	if Input.is_action_just_released(actions[currnet_action_index]):
 		if abilities_timers[currnet_action_index].is_stopped():
 			abilities_timers[currnet_action_index].start()
-
-		action_released.emit(currnet_action_index)
+			action_released.emit(currnet_action_index)
 		currnet_action_index = -1
-		state_machine.current_state = stuck_state if player.current_platform else movement_state
+		
+		if state_machine.current_state != stuck_state:
+			if player.current_platform:
+				state_machine.current_state = stuck_state
+			else:
+				state_machine.current_state = movement_state
+				
 		return
 
 
-func set_abilities(abilities_set: Dictionary,textures: Array[Texture2D] = G.data.abilities_icons):
+func set_abilities(abilities_set: Dictionary, textures: Array[Texture2D] = G.data.abilities_icons):
 	for i in range(abilities.size()):
 		abilities[i].texture_under = textures[abilities_set[i]]
-
 
 func animate_actions_cooldown():
 	for action_index in range(len(actions)):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dg5wpah0fqkwk"]
+[gd_scene load_steps=20 format=3 uid="uid://dg5wpah0fqkwk"]
 
 [ext_resource type="Script" uid="uid://r57o255hxj8o" path="res://addons/MultiplayCore/MultiPlay.gd" id="1_csopv"]
 [ext_resource type="Script" uid="uid://tqhtpnvacjvk" path="res://src/core/main.gd" id="1_nlf45"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://ibbfnwga5i7p" path="res://src/core/gui/gui.gd" id="7_7o0du"]
 [ext_resource type="PackedScene" uid="uid://dy7n3sq22m4wx" path="res://src/core/gui/abilities_selector.tscn" id="7_nxx65"]
 [ext_resource type="Theme" uid="uid://d0h2lmuclks7q" path="res://src/core/resources/theme.tres" id="8_2in8s"]
+[ext_resource type="Script" uid="uid://ct5wckjw2xhmt" path="res://src/core/abilities_handler.gd" id="12_7561f"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kagtj"]
 bg_color = Color(0, 0, 0, 0.247059)
@@ -262,6 +263,11 @@ horizontal_alignment = 1
 
 [node name="Main sync" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_7o0du")
+
+[node name="AbilitiesHandler" type="Node" parent="." node_paths=PackedStringArray("mpc")]
+script = ExtResource("12_7561f")
+mpc = NodePath("../MultiPlayCore")
+metadata/_custom_type_script = "uid://ct5wckjw2xhmt"
 
 [connection signal="player_connected" from="MultiPlayCore" to="." method="_on_multi_play_core_player_connected"]
 [connection signal="server_started" from="MultiPlayCore" to="." method="_on_multi_play_core_server_started"]
