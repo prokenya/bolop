@@ -25,6 +25,7 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [node name="DebugUI" type="CanvasLayer"]
+layer = 10
 
 [node name="Layout" type="HBoxContainer" parent="."]
 offset_left = 16.0

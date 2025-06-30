@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://btpir5edo6off"]
+[gd_scene load_steps=6 format=3 uid="uid://btpir5edo6off"]
 
 [ext_resource type="Script" uid="uid://cwld5rx6xynb3" path="res://src/worlds/platforms/platform.gd" id="1_sbqm1"]
 [ext_resource type="Texture2D" uid="uid://cxtbje5680xc" path="res://assets/svg/blok2x1.svg" id="2_obwvn"]
@@ -7,6 +7,11 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iidk5"]
 radius = 75.8344
 height = 303.338
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_obwvn"]
+properties/0/path = NodePath(".:linear_velocity")
+properties/0/spawn = true
+properties/0/replication_mode = 2
 
 [node name="platform" type="RigidBody2D"]
 collision_mask = 5
@@ -24,5 +29,9 @@ texture = ExtResource("2_obwvn")
 
 [node name="MPTransformSync" type="Node" parent="."]
 script = ExtResource("3_obwvn")
-sync_scale = true
+lerp_speed = 50
 metadata/_custom_type_script = "uid://cf0ws2lij73so"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_obwvn")
+visibility_update_mode = 1

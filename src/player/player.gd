@@ -29,11 +29,18 @@ var gravity_direction:Vector2 = Vector2.DOWN
 
 @export var can_move:bool = false
 
+@onready var mp_pos_sync: MPTransformSync = $MPTransformSync
+@onready var mp_rot_sync: MPTransformSync = $Sprite2D/MPTransformSync
+
+
+
 func _ready():
 	if is_multiplayer_authority():
 		camera.make_current()
 		abilities_set = {0: 0, 1: 0, 2: 0}
-		G.connect("set_abilities",func(ab):abilities_set = ab;can_move = true)
+		G.connect("set_abilities",func(ab):abilities_set = ab)
+	
+	G.main.round_started.connect(func():can_move = true)
 	mpp.player_ready.connect(_on_player_ready)
 	mpp.handshake_ready.connect(_on_handshake_ready)
 
@@ -42,7 +49,7 @@ func _ready():
 # Whn player node is ready, this only emit locally.
 func _on_player_ready():
 	#print("Player's now ready!")
-	state_machine.process_mode = Node.PROCESS_MODE_INHERIT
+	#state_machine.process_mode = Node.PROCESS_MODE_INHERIT
 	position.x += (mpp.player_index * 128)
 
 # On handshake data is ready. This emits to everyone in the server. You can also use it to init something for all players.

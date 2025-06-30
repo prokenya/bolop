@@ -26,7 +26,7 @@ signal connection_error(reason: ConnectionError)
 ## Emit when swap index has changed. Only emit in Swap Play mode
 signal swap_changed(to_index: int, old_index: int)
 ## On server started
-signal server_started
+signal server_started(act_client:bool)
 ## On server stopped
 signal server_stopped
 
@@ -426,7 +426,7 @@ func _online_host(act_client: bool = false, act_client_handshake_data: Dictionar
 	if _debug_bootui:
 		_debug_bootui.boot_close()
 	
-	server_started.emit()
+	server_started.emit(act_client)
 
 func _online_join(address: String, handshake_data: Dictionary = {}, credentials_data: Dictionary = {}):
 	_init_data()

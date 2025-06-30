@@ -20,7 +20,8 @@ func _entered(body:Node2D):
 		
 		#body.connect_player(player)
 		player.current_platform = body
-		if state_machine.current_state is AttackState:return
+		current_platform_path = body.get_path()
+		if state_machine.current_state in [AttackState,StuckState]:return
 		player.state_machine.current_state = stuck_state
 		player.sprite.rotation = Vector2(body.global_position - player.global_position).angle() - PI/2
 	
@@ -28,3 +29,12 @@ func _exited(body:Node2D):
 	if body is Platform:
 		if body in platforms:
 			platforms.erase(body)
+
+@export var current_platform_path: NodePath:
+	set(value):
+		current_platform_path = value
+		if not is_multiplayer_authority():
+			var node = get_node_or_null(value)
+			if node and node is Platform:
+				player.current_platform = node
+	get: return current_platform_path

@@ -18,8 +18,4 @@ func create_joint():
 	add_child(pin)
 	joint.node_a = pin.get_path()
 	joint.node_b = self.get_path()
-
-var sig = 1
-func _on_button_pressed() -> void:
-	linear_velocity = Vector2(5000,5000) * sig
-	sig = -sig
+	

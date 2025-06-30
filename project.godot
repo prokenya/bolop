@@ -42,6 +42,7 @@ folder_colors={
 "res://addons/": "orange",
 "res://assets/": "gray",
 "res://src/": "red",
+"res://src/abilities/": "gray",
 "res://src/player/": "red"
 }
 

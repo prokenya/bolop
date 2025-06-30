@@ -4,9 +4,9 @@
 [ext_resource type="Script" uid="uid://tqhtpnvacjvk" path="res://src/core/main.gd" id="1_nlf45"]
 [ext_resource type="PackedScene" uid="uid://bkjs7hge7372k" path="res://src/player/player.tscn" id="2_xa854"]
 [ext_resource type="PackedScene" uid="uid://c3in5crpal1p7" path="res://src/worlds/lobby.tscn" id="3_q2b63"]
-[ext_resource type="Script" uid="uid://c26bx74uj1ae6" path="res://addons/MultiplayCore/net_protocols/ENetProtocol.gd" id="4_q2b63"]
 [ext_resource type="Script" uid="uid://d28g4urrooh86" path="res://src/worlds/Level.gd" id="5_2uitn"]
 [ext_resource type="Texture2D" uid="uid://dnkhq55h26c0r" path="res://assets/spinner.png" id="5_xa854"]
+[ext_resource type="Script" uid="uid://hjm3te7ytwcw" path="res://addons/MultiplayCore/net_protocols/LatencyNetProtocol.gd" id="6_7561f"]
 [ext_resource type="Script" uid="uid://d3s4vy20qqra0" path="res://src/core/ServerGUI.gd" id="6_kagtj"]
 [ext_resource type="Script" uid="uid://ibbfnwga5i7p" path="res://src/core/gui/gui.gd" id="7_7o0du"]
 [ext_resource type="PackedScene" uid="uid://dy7n3sq22m4wx" path="res://src/core/gui/abilities_selector.tscn" id="7_nxx65"]
@@ -89,10 +89,6 @@ first_scene = ExtResource("3_q2b63")
 world_sync = NodePath("Level")
 metadata/_custom_type_script = "uid://r57o255hxj8o"
 
-[node name="ENetProtocol" type="Node" parent="MultiPlayCore"]
-script = ExtResource("4_q2b63")
-metadata/_custom_type_script = "uid://c26bx74uj1ae6"
-
 [node name="Level" type="Node" parent="MultiPlayCore" node_paths=PackedStringArray("spawner")]
 script = ExtResource("5_2uitn")
 spawner = NodePath("MultiplayerSpawner")
@@ -100,6 +96,10 @@ metadata/_custom_type_script = "uid://d28g4urrooh86"
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="MultiPlayCore/Level"]
 spawn_path = NodePath("..")
+
+[node name="LatencyNetProtocol" type="Node" parent="MultiPlayCore"]
+script = ExtResource("6_7561f")
+metadata/_custom_type_script = "uid://hjm3te7ytwcw"
 
 [node name="GUILayer" type="CanvasLayer" parent="."]
 layer = 2

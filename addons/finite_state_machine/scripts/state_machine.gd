@@ -38,7 +38,16 @@ func _ready() -> void:
 	for child in get_children():
 		if child is StateMachineState and child != current_state:
 			child.process_mode = Node.PROCESS_MODE_DISABLED
-
+#region multiplayer
+	states = get_children()
+var states:Array
+@export var current_state_id:int = 0:
+	set(value):
+		current_state_id = value
+		if not is_multiplayer_authority():
+			set_current_state(states[current_state_id])
+	get():return current_state_id
+#endregion
 
 # Called by the 'draw' signal emitted from the debug draw CanvasItem node.
 func _on_debug_draw_draw() -> void:
@@ -68,6 +77,8 @@ func set_current_state(value: StateMachineState) -> void:
 		current_state.process_mode = Node.PROCESS_MODE_DISABLED
 	# Set the new state
 	current_state = value
+	if is_multiplayer_authority():
+		current_state_id = states.find(current_state)
 	# Enable the node to enter the new state
 	if is_instance_valid(current_state):
 		current_state.process_mode = Node.PROCESS_MODE_INHERIT

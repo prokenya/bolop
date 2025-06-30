@@ -36,7 +36,7 @@ func _global_player_despawned():
 	if multiplayer.is_server():
 		live_players_count -= 1
 		#print_debug("despawned -> " + str(mpc.local_player.player_index))
-	if live_players_count <= 0:
+	if live_players_count <= 1:
 		round_ended.emit()
 		is_round_started = false
 

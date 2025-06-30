@@ -14,7 +14,7 @@ class_name MPTransformSync
 ## Determines if rotation will be sync
 @export var sync_rotation: bool = true
 ## Determines if scale will be sync
-@export var sync_scale: bool = false
+@export var sync_scale: bool = true
 
 @export_subgroup("Sync Sensitivity")
 ## Determines the sync sensitivity of position
@@ -23,6 +23,10 @@ class_name MPTransformSync
 @export var rotation_sensitivity: float = 0.01
 ## Determines the sync sensitivity of scale
 @export var scale_sensitivity: float = 0.01
+
+@export_subgroup("Sync Mode")
+## Server driven mode (server->client), otherwise client->server
+@export var server_driven: bool = false
 
 var _net_position = null
 var _net_rotation = null
@@ -52,6 +56,24 @@ func _ready():
 	if should_sync() and check_send_permission():
 		MPIO.mpc.player_connected.connect(_on_player_connected)
 
+## Switch sync mode between client->server and server->client
+func set_server_driven(enabled: bool):
+	server_driven = enabled
+	# Optionally sync current state when switching modes
+	if enabled and multiplayer.is_server():
+		_sync_current_transform_to_all()
+
+## Sync current transform to all clients (used when switching to server_driven mode)
+func _sync_current_transform_to_all():
+	if sync_position:
+		rpc("_recv_transform_reliable", "pos", _parent.position, true)
+	
+	if sync_rotation:
+		rpc("_recv_transform_reliable", "rot", _parent.rotation, true)
+	
+	if sync_scale:
+		rpc("_recv_transform_reliable", "scl", _parent.scale, true)
+
 func _on_player_connected(plr: MPPlayer):
 	if sync_position:
 		rpc_id(plr.player_id, "_recv_transform_reliable", "pos", _parent.position)
@@ -65,24 +87,36 @@ func _on_player_connected(plr: MPPlayer):
 func _physics_process(delta):
 	if !should_sync():
 		return
-	# Only watch for changes if is authority or server
-	if check_send_permission():
+	
+	# Determine who should send updates based on server_driven flag
+	var should_send = false
+	if server_driven:
+		should_send = multiplayer.is_server()
+	else:
+		should_send = check_send_permission()
+	
+	if should_send:
 		# Sync Position
 		if sync_position and (_parent.position - _net_position).length() > position_sensitivity:
 			rpc("_recv_transform", "pos", _parent.position)
+			_net_position = _parent.position
 	
 		# Sync Rotation
 		if sync_rotation:
-			if _sync_type == "2d" and absf(_parent.rotation - _net_rotation) > rotation_sensitivity:
+			if _sync_type == "2d" and abs(_parent.rotation - _net_rotation) > rotation_sensitivity:
 				rpc("_recv_transform", "rot", _parent.rotation)
+				_net_rotation = _parent.rotation
 			
 			if _sync_type == "3d" and (_parent.rotation - _net_rotation).length() > rotation_sensitivity:
 				rpc("_recv_transform", "rot", _parent.rotation)
+				_net_rotation = _parent.rotation
 		
 		# Sync Scale
 		if sync_scale and (_parent.scale - _net_scale).length() > scale_sensitivity:
 			rpc("_recv_transform", "scl", _parent.scale)
+			_net_scale = _parent.scale
 	else:
+		# Receive and apply transforms
 		if lerp_enabled:
 			# Sync all transforms w/lerp
 			if sync_position:
@@ -126,8 +160,14 @@ func set_scale_3d(to: Vector3):
 
 @rpc("any_peer", "call_local", "unreliable_ordered")
 func _recv_transform(field: String, set_to = null, is_server_cmd = false):
-	# Allow transform change from authority & server
-	if !check_recv_permission(is_server_cmd):
+	# Determine who can send based on server_driven flag
+	var can_receive = false
+	if server_driven:
+		can_receive = multiplayer.get_remote_sender_id() == 1 or multiplayer.is_server()  # Only from server
+	else:
+		can_receive = check_recv_permission(is_server_cmd)  # Original authority logic
+	
+	if !can_receive:
 		return
 	
 	if !is_server_cmd:
@@ -140,10 +180,13 @@ func _recv_transform(field: String, set_to = null, is_server_cmd = false):
 	else:
 		if field == "pos":
 			_parent.position = set_to
+			_net_position = set_to
 		elif field == "rot":
 			_parent.rotation = set_to
+			_net_rotation = set_to
 		elif field == "scl":
 			_parent.scale = set_to
+			_net_scale = set_to
 
 @rpc("any_peer", "call_local", "reliable")
 func _recv_transform_reliable(field: String, set_to = null, is_server_cmd = false):
