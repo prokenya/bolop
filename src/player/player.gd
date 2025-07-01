@@ -31,6 +31,7 @@ var gravity_direction:Vector2 = Vector2.DOWN
 
 @onready var mp_pos_sync: MPTransformSync = $MPTransformSync
 @onready var mp_rot_sync: MPTransformSync = $Sprite2D/MPTransformSync
+@onready var platform_component: Area2D = $"platform component"
 
 
 

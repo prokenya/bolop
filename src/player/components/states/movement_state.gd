@@ -10,7 +10,7 @@ class_name MovementState
 ## State to change to when the player 
 @export var attack_state: StateMachineState = null
 @export var stuck_state: StateMachineState = null
-
+@export var _net_direction:Vector2 = Vector2(0, 0)
 
 # Called every physics tick when this state is active.
 func _physics_process(delta):
@@ -20,8 +20,13 @@ func _physics_process(delta):
 	if !character.can_move: return
 	var direction = Input.get_vector(mpp.ma("ui_left"), mpp.ma("ui_right"),mpp.ma("ui_up"),mpp.ma("ui_down")).normalized()
 	handle_movement(delta,direction)
+	set_net_direction(direction)
 	character.move_and_slide()
  
+func set_net_direction(direction: Vector2):
+	if is_multiplayer_authority():
+		_net_direction = direction
+
 func handle_movement(delta:float,direction:Vector2):
 	character.velocity.x = move_toward(character.velocity.x, speed * direction.x, acceleration * delta)
 	if !character.is_on_wall():

@@ -30,6 +30,11 @@ func _exited(body:Node2D):
 		if body in platforms:
 			platforms.erase(body)
 
+func disconnect_current_platform():
+	if is_multiplayer_authority():
+		player.current_platform = null
+		current_platform_path = "null"
+
 @export var current_platform_path: NodePath:
 	set(value):
 		current_platform_path = value

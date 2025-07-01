@@ -99,6 +99,7 @@ spawn_path = NodePath("..")
 
 [node name="LatencyNetProtocol" type="Node" parent="MultiPlayCore"]
 script = ExtResource("6_7561f")
+simulate_latency_ms = 1
 metadata/_custom_type_script = "uid://hjm3te7ytwcw"
 
 [node name="GUILayer" type="CanvasLayer" parent="."]

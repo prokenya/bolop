@@ -3,14 +3,12 @@ extends MovementState
 
 @export var movement_state: StateMachineState
 
-@export var _net_direction: Vector2 = Vector2(0, 0)
-
 var fixed_distance: float = -20
 var last_direction: Vector2
 
 var last_platform_position: Vector2
 
-@onready var pc_component: Area2D = $"../../PC component"
+@onready var platform_component: Area2D = $"../../platform component"
 
 
 func _ready() -> void:
@@ -18,18 +16,13 @@ func _ready() -> void:
 	connect("state_entered", _state_entered)
 
 
-func set_net_direction(direction: Vector2):
-	if is_multiplayer_authority():
-		_net_direction = direction
-
-
 func handle_movement(delta: float, direction: Vector2) -> void:
-	set_net_direction(direction)
 	if !multiplayer.is_server(): return
+	#if !character.current_platform:return
 	direction = _net_direction
 	var raycast := character.GroundRay as RayCast2D
 	raycast.force_raycast_update()
-
+	
 	stuck()
 
 	if not raycast.is_colliding():
@@ -64,10 +57,10 @@ func handle_movement(delta: float, direction: Vector2) -> void:
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed(mpp.ma("ui_accept")):
-		if pc_component.platforms.size() > 1:
-			var last_platform = pc_component.platforms.pop_back()
+		if platform_component.platforms.size() > 1:
+			var last_platform = platform_component.platforms.pop_back()
 			if last_platform != null:
-				pc_component.platforms.push_front(last_platform)
+				platform_component.platforms.push_front(last_platform)
 				character.current_platform = last_platform
 				character.sprite.rotation = Vector2(last_platform.global_position - character.global_position).angle() - PI / 2
 				return
@@ -94,21 +87,17 @@ func jump():
 
 
 func change_auth(client: bool):
-	#if is_multiplayer_authority() and multiplayer.is_server():return
-
-	#character.mp_pos_sync.sync_position = client
-	#character.mp_pos_sync.sync_scale = client
-	#character.mp_rot_sync.sync_scale = client
 	character.mp_pos_sync.set_server_driven(!client)
 	character.mp_rot_sync.set_server_driven(!client)
 	
 
 
-@rpc("any_peer","unreliable","call_local")
-func sync_transform(pos,rot):
-	character.position = pos
-	character.sprite.rotation = rot
+#@rpc("any_peer","unreliable","call_local")
+#func sync_transform(pos,rot):
+	#character.position = pos
+	#character.sprite.rotation = rot
 
+# to all players in the server.
 func _state_entered():
 	change_auth(false)
 	if is_multiplayer_authority():
@@ -118,5 +107,6 @@ func _state_entered():
 func _state_exited():
 	change_auth(true)
 	jump()
+	character.platform_component.disconnect_current_platform()
 	character.current_platform = null
 	character.sprite.rotation = 0
