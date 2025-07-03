@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dd8n4y3xr4f8q"]
+
+[ext_resource type="Script" uid="uid://bp0emmagn1fqw" path="res://src/abilities/scaler.gd" id="1_x12eg"]
+
+[node name="scaler" type="Area2D"]
+script = ExtResource("1_x12eg")

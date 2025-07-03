@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8so3oymb27va"]
+[gd_scene load_steps=15 format=3 uid="uid://c8so3oymb27va"]
 
 [ext_resource type="Script" uid="uid://1wbw4r27epwu" path="res://src/abilities/wind.gd" id="1_yfagw"]
 
@@ -10,12 +10,91 @@ properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
+[sub_resource type="Gradient" id="Gradient_yfagw"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7vexo"]
+gradient = SubResource("Gradient_yfagw")
+width = 150
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Curve" id="Curve_ugcmb"]
+_data = [Vector2(0, 0.337079), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.95122, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_hjt7q"]
+curve = SubResource("Curve_ugcmb")
+
+[sub_resource type="Curve" id="Curve_yfagw"]
+_limits = [-2.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0674157), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_7vexo"]
+curve = SubResource("Curve_yfagw")
+
+[sub_resource type="Curve" id="Curve_nj3ad"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ugcmb"]
+curve = SubResource("Curve_nj3ad")
+
+[sub_resource type="Curve" id="Curve_7vexo"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.731707, 0.707865), -0.339444, -0.339444, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_nj3ad"]
+curve = SubResource("Curve_7vexo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hjt7q"]
+lifetime_randomness = 0.03
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 120.0
+emission_ring_inner_radius = 80.0
+emission_ring_cone_angle = 90.0
+angle_min = -1044.5
+angle_max = 720.0
+spread = 180.0
+flatness = 1.0
+initial_velocity_max = 116.67
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+orbit_velocity_min = -2.0
+orbit_velocity_max = 2.0
+orbit_velocity_curve = SubResource("CurveTexture_7vexo")
+radial_velocity_min = -2.23517e-05
+radial_velocity_max = 183.33
+radial_velocity_curve = SubResource("CurveTexture_ugcmb")
+gravity = Vector3(0, 0, 0)
+scale_min = 0.3
+scale_max = 0.6
+scale_curve = SubResource("CurveTexture_nj3ad")
+color = Color(0.737255, 1, 1, 1)
+emission_curve = SubResource("CurveTexture_hjt7q")
+turbulence_influence_min = 0.0
+turbulence_influence_max = 1.0
+
 [node name="wind" type="Area2D"]
 collision_layer = 0
 script = ExtResource("1_yfagw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_yfagw")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_yfagw")
+
+[node name="wind_particles" type="GPUParticles2D" parent="."]
+emitting = false
+texture = SubResource("GradientTexture2D_7vexo")
+one_shot = true
+explosiveness = 1.0
+randomness = 0.33
+trail_enabled = true
+process_material = SubResource("ParticleProcessMaterial_hjt7q")

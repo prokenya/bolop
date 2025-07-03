@@ -1,3 +1,4 @@
+res://src/shaders
 res://src/abilities
 res://src/core
 res://src/core/gui
@@ -5,7 +6,6 @@ res://src/worlds
 res://src/worlds/platforms
 res://assets/svg
 /home/prokenya/Documents/bilds/BOOPL3.0
-res://src/shaders
 /home/prokenya/Documents/bilds
 res://
 /home/prokenya/Documents/windows

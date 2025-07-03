@@ -43,7 +43,9 @@ func _local_action_pressed(action_index):
 
 func _local_action_released(action_index):
 	match current_ability_index:
-		_:return
+		1:spawn_ability_node(current_ability_index,{"global_position":local_player.global_position,
+		"global_rotation":local_player.head.global_rotation})
+		_:pass
 	current_ability_index = -1
 
 @rpc("any_peer", "call_local", "reliable")

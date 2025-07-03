@@ -1,6 +1,8 @@
 extends Area2D
 class_name Ability
 
+@export var lifetime:float = 2
+
 func _ready() -> void:
 	if !multiplayer.is_server():
 		return

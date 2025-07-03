@@ -147,4 +147,6 @@ attack_state = NodePath("../StateMachine/AttackState")
 stuck_state = NodePath("../StateMachine/StuckState")
 movement_state = NodePath("../StateMachine/MovementState")
 
+[node name="head" type="Node2D" parent="."]
+
 [editable path="abilities component"]
