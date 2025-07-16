@@ -19,13 +19,13 @@ func _handle_ability():
 	var collider = firs_ray.get_collider()
 	collision_point = to_local(firs_ray.get_collision_point())
 	if collider:
-		print(collider)
+		#print(collider)
 		if collider is Platform or collider is Player:
-			#if multiplayer.is_server():
-				#collider.add_scale(0.2, 10)
+			if multiplayer.is_server():
+				collider.add_scale(1, 10)
 			draw_line_now = true
 	else:
-		print("Ray didn't hit anything.")
+		#print("Ray didn't hit anything.")
 		collision_point = firs_ray.target_position
 		draw_line_now = true
 	queue_redraw()

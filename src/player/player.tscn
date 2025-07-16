@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bkjs7hge7372k"]
+[gd_scene load_steps=13 format=3 uid="uid://bkjs7hge7372k"]
 
 [ext_resource type="Script" uid="uid://cepd6vn07wyx5" path="res://src/player/player.gd" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://dwqv65m8ieqgg" path="res://addons/finite_state_machine/scripts/state_machine.gd" id="2_jiejy"]
@@ -8,8 +8,6 @@
 [ext_resource type="Script" uid="uid://da7bm1n6ciq12" path="res://src/player/components/states/stuck_state.gd" id="4_o822w"]
 [ext_resource type="Script" uid="uid://bmnoykt41qebx" path="res://src/player/components/platform_connect_component.gd" id="4_yw30f"]
 [ext_resource type="Script" uid="uid://7kj1fb7eiojt" path="res://src/player/components/states/attack_state.gd" id="5_ylhto"]
-[ext_resource type="Shader" uid="uid://ctbold875u364" path="res://src/shaders/item_color.gdshader" id="8_l271a"]
-[ext_resource type="Texture2D" uid="uid://weg15dm68o5n" path="res://assets/svg/weapons/boomerang.svg" id="8_x42xx"]
 [ext_resource type="PackedScene" uid="uid://dvydtw45d6jok" path="res://src/player/components/abilities.tscn" id="9_cwolq"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8ydov"]
@@ -20,22 +18,20 @@ properties/1/path = NodePath("StateMachine:current_state_id")
 properties/1/spawn = true
 properties/1/replication_mode = 2
 properties/2/path = NodePath("StateMachine/StuckState:_net_direction")
-properties/2/spawn = true
-properties/2/replication_mode = 2
+properties/2/spawn = false
+properties/2/replication_mode = 0
 properties/3/path = NodePath("platform component:current_platform_path")
-properties/3/spawn = true
-properties/3/replication_mode = 1
+properties/3/spawn = false
+properties/3/replication_mode = 0
+properties/4/path = NodePath(".:player_color")
+properties/4/spawn = true
+properties/4/replication_mode = 1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yw30f"]
 radius = 55.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g1dw6"]
 radius = 58.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ydov"]
-shader = ExtResource("8_l271a")
-shader_parameter/target_collor = Color(0.2, 0.2, 0.2, 1)
-shader_parameter/set_collor = Color(1, 0.31307, 0.731336, 1)
 
 [node name="player" type="CharacterBody2D"]
 scale = Vector2(0.3, 0.3)
@@ -121,12 +117,6 @@ stuck_state = NodePath("../StateMachine/StuckState")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="platform component"]
 shape = SubResource("CircleShape2D_g1dw6")
-
-[node name="Boomerang" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_8ydov")
-position = Vector2(-103.333, -120)
-scale = Vector2(0.22, 0.22)
-texture = ExtResource("8_x42xx")
 
 [node name="abilities component" parent="." node_paths=PackedStringArray("player", "state_machine", "attack_state", "stuck_state", "movement_state") instance=ExtResource("9_cwolq")]
 anchors_preset = 8

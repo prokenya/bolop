@@ -17,9 +17,7 @@ func _ready() -> void:
 
 
 func handle_movement(delta: float, direction: Vector2) -> void:
-	if !multiplayer.is_server(): return
 	#if !character.current_platform:return
-	direction = _net_direction
 	var raycast := character.GroundRay as RayCast2D
 	raycast.force_raycast_update()
 	
@@ -53,7 +51,6 @@ func handle_movement(delta: float, direction: Vector2) -> void:
 
 	character.velocity = tangent * vel_tangent + wall_normal * -vel_normal
 	character.sprite.rotation = wall_normal.angle() + PI / 2
-	#rpc("sync_transform",character.position,character.rotation)
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed(mpp.ma("ui_accept")):
@@ -85,12 +82,11 @@ func jump():
 		var jump_dir = -(Vector2.UP + direction).normalized()
 		character.velocity = character.JUMP_VELOCITY * jump_dir
 
-
-func change_auth(client: bool):
-	character.mp_pos_sync.set_server_driven(!client)
-	character.mp_rot_sync.set_server_driven(!client)
+#
+#func change_auth(client: bool):
+	#character.mp_pos_sync.set_server_driven(!client)
+	#character.mp_rot_sync.set_server_driven(!client)
 	
-
 
 #@rpc("any_peer","unreliable","call_local")
 #func sync_transform(pos,rot):
@@ -99,13 +95,11 @@ func change_auth(client: bool):
 
 # to all players in the server.
 func _state_entered():
-	change_auth(false)
 	if is_multiplayer_authority():
 		last_platform_position = character.current_platform.global_position
 
 
 func _state_exited():
-	change_auth(true)
 	jump()
 	character.platform_component.disconnect_current_platform()
 	character.current_platform = null

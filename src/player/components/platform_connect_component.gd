@@ -38,8 +38,8 @@ func disconnect_current_platform():
 @export var current_platform_path: NodePath:
 	set(value):
 		current_platform_path = value
-		if not is_multiplayer_authority():
-			var node = get_node_or_null(value)
-			if node and node is Platform:
-				player.current_platform = node
+		#if not is_multiplayer_authority():
+			#var node = get_node_or_null(value)
+			#if node and node is Platform:
+				#player.current_platform = node
 	get: return current_platform_path

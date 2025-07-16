@@ -19,8 +19,9 @@ func _physics_process(delta):
 		return
 	if !character.can_move: return
 	var direction = Input.get_vector(mpp.ma("ui_left"), mpp.ma("ui_right"),mpp.ma("ui_up"),mpp.ma("ui_down")).normalized()
+	if !is_multiplayer_authority():return
 	handle_movement(delta,direction)
-	set_net_direction(direction)
+	#set_net_direction(direction)
 	character.move_and_slide()
  
 func set_net_direction(direction: Vector2):

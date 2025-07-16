@@ -28,6 +28,10 @@ config/icon="res://icon.svg"
 MPIO="*res://addons/MultiplayCore/MPIO.gd"
 G="*res://src/core/Global.gd"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [dotnet]
 
 project/assembly_name="multiplayer fighting"

@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://buyayengbjf4c"]
+
+[ext_resource type="Shader" uid="uid://ctbold875u364" path="res://src/shaders/item_color.gdshader" id="1_hl1cp"]
+
+[resource]
+shader = ExtResource("1_hl1cp")
+shader_parameter/target_collor = Color(0.2, 0.2, 0.2, 1)
+shader_parameter/set_collor = Color(1, 0.31307, 0.731336, 1)

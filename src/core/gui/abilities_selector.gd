@@ -1,9 +1,11 @@
 extends PanelContainer
 
-var selector_current_id: int = 1
+var selector_current_id: int = 0
 
 var abilities_set: Dictionary = { 0: 0, 1: 0, 2: 0 }
 var abilities_count: int
+
+@export var ability_texture_size:Vector2 = Vector2(64,64)
 
 @onready var selector: TextureRect = %selector
 @onready var abilities_set_container: HBoxContainer = %abilities_set
@@ -12,10 +14,15 @@ var abilities_count: int
 
 @onready var abilities_textures: Array[Texture2D]
 
+@onready var color_picker_button: ColorPickerButton = %ColorPickerButton
+
 
 func _ready() -> void:
 	abilities_textures = G.data.abilities_icons
 	abilities_count = abilities_textures.size()
+	await get_tree().process_frame
+	call_deferred("center_selector")
+	
 
 
 func _input(event: InputEvent) -> void:
@@ -23,8 +30,11 @@ func _input(event: InputEvent) -> void:
 
 	if Input.is_action_just_pressed("ui_accept"):
 		selector.visible = !selector.visible
-		selector_current_id = 1
-		if !selector.visible:
+		selector_current_id = 0
+		
+		if selector.visible:
+			call_deferred("center_selector")
+		else:
 			emit_set_abilities()
 
 	if !selector.visible: return
@@ -46,17 +56,26 @@ func emit_set_abilities():
 func show_abilities_selector(show: bool = true):
 	visible = show
 	selector.visible = show
-	selector_current_id = 1
-
+	selector_current_id = 0
+	
 
 func move_selector(direction: int) -> void:
 	var new_id = selector_current_id + direction
 	if new_id >= 0 and new_id < abilities_set_count:
 		selector_current_id = new_id
-		selector.position.x += (64 + abilities_set_separation) * direction
+		selector.position.x += (ability_texture_size.x + abilities_set_separation) * direction
+		center_selector()
 
+func center_selector():
+	var target:Control = abilities_set_container.get_child(selector_current_id)
+	selector.global_position.x = target.global_position.x + ability_texture_size.x/2 - selector.size.x/2
+	
 
 func set_ability(direction: int):
+	if selector_current_id == 3:
+		pick_random_color()
+		return 
+	
 	var ability: TextureRect = abilities_set_container.get_children()[selector_current_id]
 	var ability_current_id: int = abilities_set[selector_current_id]
 	var new_id = ability_current_id + direction
@@ -66,7 +85,18 @@ func set_ability(direction: int):
 		ability_current_id = 0
 	else:
 		ability_current_id = new_id
-
+	
 	ability.texture = abilities_textures[ability_current_id]
 	abilities_set[selector_current_id] = ability_current_id
-	print("c_id = " + str(ability_current_id))
+	#print("c_id = " + str(ability_current_id))
+
+func pick_random_color():
+	var r = randf()
+	var g = randf()
+	var b = randf()
+	
+	color_picker_button.color = Color(r, g, b, 1)
+	G.player_color = Color(r, g, b, 1)
+
+func _on_color_picker_button_color_changed(color: Color) -> void:
+	G.player_color = color

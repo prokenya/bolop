@@ -12,6 +12,11 @@ const JUMP_VELOCITY = -700.0
 		return abilities_set
 
 @export var can_move: bool = false
+@export var player_color: Color:
+	set(value):
+		player_color = value
+		update_color(player_color)
+	get(): return player_color
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -39,14 +44,22 @@ var gravity_direction: Vector2 = Vector2.DOWN
 
 
 func _ready():
-	if is_multiplayer_authority():
-		camera.make_current()
-		abilities_set = { 0: 0, 1: 0, 2: 0 }
-		G.connect("set_abilities", func(ab): abilities_set = ab)
-
 	G.main.round_started.connect(func(): can_move = true)
 	mpp.player_ready.connect(_on_player_ready)
 	mpp.handshake_ready.connect(_on_handshake_ready)
+	
+	if !is_multiplayer_authority():return
+	camera.make_current()
+	abilities_set = { 0: 0, 1: 0, 2: 0 }
+	G.connect("set_abilities", func(ab): abilities_set = ab)
+	player_color = G.player_color
+	G.set_player_color.connect(func(color:Color):player_color=color)
+
+
+
+func _input(event: InputEvent) -> void:
+	var mouse_pos = get_global_mouse_position()
+	head.look_at(mouse_pos)
 
 
 func add_scale(add_scale: float, time: int = 10):
@@ -54,11 +67,12 @@ func add_scale(add_scale: float, time: int = 10):
 	await get_tree().create_timer(time).timeout
 	scale = Vector2(0.3, 0.3)
 
-func _input(event: InputEvent) -> void:
-	var mouse_pos = get_global_mouse_position()
-	head.look_at(mouse_pos)
+func update_color(color:Color):
+	$Sprite2D.modulate = color
+	
 
 #region mpp calls
+
 
 # Whn player node is ready, this only emit locally.
 func _on_player_ready():
