@@ -1,12 +1,12 @@
+Sprite2D
+MultiplayerSynchronizer
 ColorPickerButton
 PointLight2D
-Sprite2D
 Node2D
 RayCast2D
 GPUParticles2D
 Area2D
 Node
-MultiplayerSynchronizer
 MPTransformSync
 LatencyNetProtocol
 ENetProtocol

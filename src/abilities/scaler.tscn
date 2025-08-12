@@ -1,6 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://dd8n4y3xr4f8q"]
+[gd_scene load_steps=3 format=3 uid="uid://dd8n4y3xr4f8q"]
 
 [ext_resource type="Script" uid="uid://bp0emmagn1fqw" path="res://src/abilities/scaler.gd" id="1_x12eg"]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_x12eg"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:draw_line_now")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:collision_point")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath(".:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 2
+
 [node name="scaler" type="Area2D"]
 script = ExtResource("1_x12eg")
+lifetime = 1990.0
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_x12eg")

@@ -1,7 +1,7 @@
 extends Ability
 
-var draw_line_now:bool = false
-var collision_point:Vector2
+@export var draw_line_now:bool = false
+@export var collision_point:Vector2
 func _ready() -> void:
 	super()
 	#_handle_ability()
