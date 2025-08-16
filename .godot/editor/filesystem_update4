@@ -1,6 +1,7 @@
-res://src/core/main.tscn
+res://src/abilities/scaler.tscn
 res://src/shaders/item_color.gdshader
 res://src/shaders/scaler.gdshader
+res://src/core/main.tscn
 res://src/player/player.tscn
 res://src/worlds/world1.tscn
 res://src/worlds/lobby.tscn
@@ -9,5 +10,3 @@ res://src/core/gui/abilities_selector.tscn
 res://src/player/components/abilities.tscn
 res://src/abilities/wind.tscn
 res://addons/MultiplayCore/debug_ui/debug_ui.tscn
-res://src/abilities/scaler.tscn
-res://src/abilities/scaler.gd

@@ -17,8 +17,10 @@ properties/3/spawn = true
 properties/3/replication_mode = 2
 
 [node name="scaler" type="Area2D"]
+show_behind_parent = true
+z_index = -512
 script = ExtResource("1_x12eg")
-lifetime = 1990.0
+lifetime = 1.0
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_x12eg")
